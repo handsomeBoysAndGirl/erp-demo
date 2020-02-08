@@ -5,14 +5,35 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [{
-    path: '/',
+    path: '/home',
     name: 'home',
     component: Home,
+    meta: {
+      title: '首页',
+      icon: 'dashboard',
+      noCache: true
+    },
     children: [{
-      path: "/test",
-      name: "test",
-      component: () => import('../views/caigou/Test.vue')
-    }]
+        path: "/test",
+        name: "test",
+        component: () => import('../views/caigou/Test.vue'),
+        meta: {
+          title: '采购计划单列表',
+          icon: 'dashboard',
+          noCache: true
+        }
+      },
+      {
+        path: "/fillIn",
+        name: "fillIn",
+        component: () => import('../views/caigou/FillIn.vue'),
+        meta: {
+          title: '填写采购计划单',
+          icon: 'dashboard',
+          noCache: true
+        }
+      },
+    ]
   },
   {
     path: '/about',

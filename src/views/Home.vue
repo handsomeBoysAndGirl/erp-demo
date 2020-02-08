@@ -15,7 +15,7 @@
           <el-submenu index="1">
             <template slot="title">采购</template>
             <el-menu-item index="/test">test</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
+            <el-menu-item index="/fillIn">填写采购计划单</el-menu-item>
             <el-menu-item index="1-3">选项3</el-menu-item>
             <el-submenu index="1-4">
               <template slot="title">选项4</template>
@@ -43,9 +43,18 @@
         </el-menu>
       </el-header>
       <el-main>
+        <div class="navbar clearfix">
+          <el-breadcrumb class="breadcrumb-container" separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item
+              v-for="item in levelList"
+              :key="item.path"
+              :to="item.path"
+            >{{item.meta.title}}</el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
         <router-view />
       </el-main>
-      <el-footer>Footer</el-footer>
+      <!-- <el-footer>Footer</el-footer> -->
     </el-container>
   </section>
 </template>
@@ -54,13 +63,40 @@
 export default {
   data() {
     return {
-      activeIndex2: "1"
+      activeIndex2: "1",
+      levelList: []
     };
+  },
+  watch: {
+    $route() {
+      this.getBreadcrumb();
+    }
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    getBreadcrumb() {
+      let matched = this.$route.matched.filter(item => item.name);
+      const first = matched[0];
+      console.log(first);
+      if (first && first.name.trim() !== "home") {
+        matched = [{ path: "/", meta: { title: "首页" } }].concat(matched);
+      }
+      console.log(matched);
+      this.levelList = matched;
     }
+  },
+  created() {
+    this.getBreadcrumb();
   }
 };
 </script>
+<style scoped>
+section .el-container .el-header {
+  padding: 0;
+}
+.clearfix {
+  margin-bottom: 15px;
+}
+</style>
