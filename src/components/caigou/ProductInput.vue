@@ -1,17 +1,76 @@
 <template>
-  <el-autocomplete
-    width="500"
-    v-model="wanglai"
-    :fetch-suggestions="querySearch"
-    placeholder="请输入内容"
-    :trigger-on-focus="false"
-    @select="handleSelect"
-  ></el-autocomplete>
+  <div class="productInput-box">
+    <el-autocomplete
+      class="productInput"
+      v-model="product"
+      :disabled="dis"
+      :fetch-suggestions="querySearch"
+      placeholder="请输入内容"
+      :trigger-on-focus="false"
+      @select="handleSelect"
+    ></el-autocomplete>
+    <div class="productInput-type">
+      <span>输入类型：</span>
+      <el-checkbox v-model="checked" disabled v-for="(item,index) in fanweic" :key="index">{{item}}</el-checkbox>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "productInput",
+  props: {
+    bwid: {
+      type: String,
+      default: "0"
+    },
+    fanweic: {
+      type: Array,
+      default: []
+    }
+  },
+  data() {
+    return {
+      product: "",
+      checked: true,
+      dis: true
+    };
+  },
+  watch: {
+    bwid() {
+      if (this.bwid != "0") {
+        this.dis = false;
+      }
+    }
+  },
+  methods: {
+    querySearch(queryString, cb) {
+      this.$axios
+        .post("/api/product")
+        .then(res => {
+          cb(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    handleSelect(value) {
+      this.product = "";
+      this.$emit("productInfo", value);
+      console.log(value);
+    }
+  }
+};
 </script>
 
-<style>
+<style scoped>
+.productInput >>> div {
+  width: 1600px;
+}
+.productInput-box {
+  padding: 15px 0 0 0;
+}
+.productInput-type {
+  margin-top: 15px;
+}
 </style>

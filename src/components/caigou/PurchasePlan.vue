@@ -72,6 +72,7 @@ export default {
         });
     },
     handleSelect(item) {
+      this.$emit("wanglaiInfo", item);
       console.log(item);
     }
   },

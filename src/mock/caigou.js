@@ -49,9 +49,12 @@ const product = [{
         "gsp": "ptyp",
         "danwei": "盒",
         "jianzhuang": 300,
-        "step": 1,
+        "step": 0.3,
         "jx": "jx_zsj",
         "ghdw": "贵州九州通达医药有限公司",
+        "value": "*盐酸肾上腺素注射液* [YSSSXSZSY] [远大医药（中国）有限公司] [1ml:1mg*10只] [jx_zsj] 库存：20盒",
+        "price": 0,
+        "shuliang": 0,
     },
     {
         "bp_id": 3,
@@ -66,6 +69,9 @@ const product = [{
         "step": 1,
         "jx": "jx_jnj",
         "ghdw": "贵州九州通达医药有限公司",
+        "value": "*伊曲康唑胶囊（易启康）* [YQKSJNYQK] [成都倍特药业有限公司] [0.1g*7s] [jx_jnj] 库存：20盒",
+        "price": 0,
+        "shuliang": 0,
     },
     {
         "bp_id": 4,
@@ -80,10 +86,14 @@ const product = [{
         "step": 1,
         "jx": "jx_jnj",
         "ghdw": "贵州九州通达医药有限公司",
+        "value": "*醋酸地塞米松片* [YSSSXSZSY] [浙江仙琚制药股份有限公司] [0.75mg*100s] [jx_jnj] 库存：20盒",
+        "price": 0,
+        "shuliang": 0,
     }
 ]
 
 Mock.mock('/api/test', 'post', data)
 Mock.mock('/api/wanglai', 'post', wanglai)
+Mock.mock('/api/product', 'post', product)
 
 export default Mock;
