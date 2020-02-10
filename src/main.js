@@ -5,7 +5,12 @@ import App from './App.vue'
 import router from './router'
 import axios from "./utils/http";
 
-Vue.prototype.$axios = axios
+
+//Mock  start
+import "./mock"
+
+
+//Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false
 

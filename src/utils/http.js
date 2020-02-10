@@ -1,6 +1,7 @@
 import axios from "axios";
 import {Message,Loading} from "element-ui";
 import router from '@/router';
+import qs from 'qs'
 /**
  * http请求工具类
  * 
@@ -12,8 +13,10 @@ import router from '@/router';
 
 //创建axios的实例
 const service = axios.create({
-    timeout: 10000 // 超时时间
 });
+axios.defaults.baseURL = 'http://localhost:8089';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 
 let loading;
 function startLoading() {    //使用Element loading-start 方法
@@ -28,7 +31,6 @@ function endLoading() {    //使用Element loading-close 方法
   loading.close()
 }
 
-const Qs = require('qs');
 service.interceptors.request.use((config) => {
         // if (localStorage.tsToken) { //验证token
         //     config.headers.Authorization = localStorage.tsToken
@@ -37,7 +39,7 @@ service.interceptors.request.use((config) => {
         // }
         startLoading();
         if (config.method == "post") {
-            config.data = Qs.stringify(config.data)
+            config.data = qs.stringify(config.data)
         }
         return config
     },
@@ -102,5 +104,34 @@ service.interceptors.response.use((response) => {
         return Promise.reject(errMsg);
     }
 )
+
+export function get(url, params) {
+
+    const token =  "123"               //window.localStorage.getItem("token");
+    axios.defaults.headers.common['token'] = token;
+
+    return new Promise((resolve, reject) => {
+        axios.get(url, {
+            params:params
+        }).then(res => {
+            resolve(res.data)
+        }).catch(err => {
+            reject(err.data)
+        })
+    })
+}
+
+export function post(url, params) {
+    console.log(params)
+    const token = "123" // window.localStorage.getItem("token");
+    axios.defaults.headers.common['token'] = token;
+    return new Promise((resolve, reject) => {
+        axios.post(url,JSON.stringify(params)).then(res => {
+            resolve(res.data)
+        }).catch(err => {
+            reject(err.data)
+        })
+    });
+}
 
 export default service

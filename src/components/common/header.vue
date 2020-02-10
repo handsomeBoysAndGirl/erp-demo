@@ -38,6 +38,7 @@
 
 <script>
   export default {
+    name:"Header",
     data() {
       return {
         activeIndex2: '1'

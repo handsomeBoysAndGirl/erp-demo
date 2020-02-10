@@ -6,15 +6,24 @@
           <h3>账号密码登录</h3>
         </div>
         <!-- username -->
-        <el-form-item prop="username">
+        <el-form-item prop="name" 
+              :rules="[
+                  { required: true, message: '请输入账号', trigger: 'blur' }
+              ]">
           <el-input type="text" v-model="form.name" auto-complete="off" placeholder="账号">
             <i slot="prefix" class="fa fa-user-o"></i>
           </el-input>
         </el-form-item>
+      
 
+      
         <!-- password -->
-        <el-form-item prop="pass">
-          <el-input type="password" v-model="form.pass" auto-complete="off" placeholder="密码">
+        <el-form-item 
+          prop="pass"
+          :rules="[
+            { required: true, message: '请输入密码', trigger: 'blur' }
+          ]">
+          <el-input type="password" v-model="form.pass" @keyup.enter.native="onSubmit" auto-complete="off" placeholder="密码">
             <i slot="prefix" class="fa fa-lock"></i>
           </el-input>
         </el-form-item>
@@ -30,6 +39,7 @@
 
 <script>
   import LoginHeader from "./LoginHeader.vue";
+  import {apiLogin}  from '@/utils/api'
   export default {
     name: "login",
     data() {
@@ -42,7 +52,26 @@
     },
     methods: {
       onSubmit() {
-        this.$router.push("/");
+         apiLogin({
+            name: this.form.name,
+            pass: this.form.pass
+          }).then(res=>{
+            console.log(res)
+            if(res.code == 1){
+              this.afterlogin(res)
+            }
+          })
+      },
+      afterlogin(data){
+        console.log(data)
+          window.localStorage.setItem("token", data.token);
+          window.localStorage.setItem("userInfo", JSON.stringify(data.userInfo));
+          this.$message({
+            type: "success",
+            message: `欢迎您，${data.name}!`,
+            duration: 3000
+          });
+        this.$router.replace({ path: "/" });
       }
     },
     created() {},
