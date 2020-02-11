@@ -95,5 +95,6 @@ const product = [{
 Mock.mock('/api/test', 'post', data)
 Mock.mock('/api/wanglai', 'post', wanglai)
 Mock.mock('/api/product', 'post', product)
+Mock.mock('/api/user', 'post', user)
 
 export default Mock;

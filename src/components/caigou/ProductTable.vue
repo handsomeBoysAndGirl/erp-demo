@@ -16,6 +16,7 @@
       <template slot-scope="scope">
         <div v-if="status === 'edit'">
           <el-input
+            @keyup.alt.delete.native="deleteRow(scope.$index, tablelist)"
             type="number"
             min="0"
             :class="numbersequal(scope.row.shuliang,scope.row.step)? '':'error'"
@@ -32,7 +33,11 @@
     <el-table-column label="单价">
       <template slot-scope="scope">
         <div v-if="status === 'edit'">
-          <el-input type="number" v-model="scope.row.price"></el-input>
+          <el-input
+            type="number"
+            @keyup.alt.delete.native="deleteRow(scope.$index, tablelist)"
+            v-model="scope.row.price"
+          ></el-input>
         </div>
         <div v-else>
           <span>{{scope.row.price}}</span>
@@ -109,6 +114,10 @@ export default {
       });
 
       return sums;
+    },
+    deleteRow(index, rows) {
+      console.log(1);
+      rows.splice(index, 1);
     }
   }
 };
