@@ -92,9 +92,120 @@ const product = [{
     }
 ]
 
+const basicInformation = { //基础信息
+    //采购费用比例
+    proportion: 0.1
+}
+
+const danjuIndex = [{
+        "di_id": 1,
+        "bw_id": 3,
+        "be_id": 39,
+        "be_id2": 39,
+        "be_id3": 39,
+        "be_id4": 39,
+        "heji_pre": 2333,
+        "youhui": 100,
+        "type": 1,
+        "date": "2020-02-08",
+        "danhao": "CD20200208000102",
+        "beizhu": "",
+        "zhaiyao": "",
+        "dateline": ""
+    },
+    {
+        "di_id": 2,
+        "bw_id": 3,
+        "be_id": 39,
+        "be_id2": 39,
+        "be_id3": 39,
+        "be_id4": 39,
+        "heji_pre": 2333,
+        "youhui": 100,
+        "type": 1,
+        "date": "2020-02-08",
+        "danhao": "CD20200208000103",
+        "beizhu": "",
+        "zhaiyao": "",
+        "dateline": ""
+    },
+    {
+        "di_id": 3,
+        "bw_id": 3,
+        "be_id": 39,
+        "be_id2": 39,
+        "be_id3": 39,
+        "be_id4": 39,
+        "heji_pre": 2333,
+        "youhui": 100,
+        "type": 1,
+        "date": "2020-02-08",
+        "danhao": "CD20200208000104",
+        "beizhu": "",
+        "zhaiyao": "",
+        "dateline": ""
+    }
+]
+
+const danjuList = [{
+    "dl_id": 1,
+    "di_id": 1,
+    "psk_id": 0,
+    "bp_id": 1,
+    "pihao": "",
+    "riqi": "",
+    "shuliang": 12,
+    "jiage": 12,
+    "jine": 144,
+}, {
+    "dl_id": 2,
+    "di_id": 1,
+    "psk_id": 0,
+    "bp_id": 1,
+    "pihao": "",
+    "riqi": "",
+    "shuliang": 12,
+    "jiage": 12,
+    "jine": 144,
+}, {
+    "dl_id": 3,
+    "di_id": 1,
+    "psk_id": 0,
+    "bp_id": 1,
+    "pihao": "",
+    "riqi": "",
+    "shuliang": 12,
+    "jiage": 12,
+    "jine": 144,
+}, {
+    "dl_id": 4,
+    "di_id": 2,
+    "psk_id": 0,
+    "bp_id": 1,
+    "pihao": "",
+    "riqi": "",
+    "shuliang": 12,
+    "jiage": 12,
+    "jine": 144,
+}, {
+    "dl_id": 5,
+    "di_id": 2,
+    "psk_id": 0,
+    "bp_id": 1,
+    "pihao": "",
+    "riqi": "",
+    "shuliang": 12,
+    "jiage": 12,
+    "jine": 144,
+}]
+
 Mock.mock('/api/test', 'post', data)
 Mock.mock('/api/wanglai', 'post', wanglai)
 Mock.mock('/api/product', 'post', product)
 Mock.mock('/api/user', 'post', user)
+Mock.mock('/api/basicInformation', 'post', basicInformation)
+Mock.mock('/api/danjuIndex', 'post', danjuIndex)
+Mock.mock('/api/danjuList', 'post', danjuList)
+
 
 export default Mock;

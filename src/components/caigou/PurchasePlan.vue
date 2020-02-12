@@ -51,6 +51,12 @@
 <script>
 export default {
   name: "purchasePlan",
+  props: {
+    dtype: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
       formInline: {
@@ -64,7 +70,7 @@ export default {
         be_id2: "", //制单人
         be_id3: "", //审核人
         be_id4: "", //产品经理
-        type: "", //单据类型
+        type: this.dtype, //单据类型
         date: "", //单据日期
         danhao: "", //单号
         beizhu: "",
@@ -87,12 +93,16 @@ export default {
     },
     handleSelect(item) {
       this.$emit("wanglaiInfo", item);
-      console.log(item);
+      this.uploadData.bw_id = item.bw_id;
     },
     getUserInfo() {
       this.$axios
         .post("/api/user")
         .then(res => {
+          this.uploadData.be_id = res.data.be_id;
+          this.uploadData.be_id2 = res.data.be_id;
+          this.uploadData.be_id3 = res.data.be_id;
+          this.uploadData.be_id4 = res.data.be_id;
           this.userInfo = res.data;
         })
         .catch(err => {
@@ -126,7 +136,6 @@ export default {
     }
   },
   created() {
-    this.formInline.data = new Date();
     this.uploadData.data = new Date();
     this.uploadData.danhao = this.randomNumber();
     this.getUserInfo();

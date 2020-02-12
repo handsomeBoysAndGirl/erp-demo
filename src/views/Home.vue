@@ -79,11 +79,9 @@ export default {
     getBreadcrumb() {
       let matched = this.$route.matched.filter(item => item.name);
       const first = matched[0];
-      console.log(first);
       if (first && first.name.trim() !== "home") {
         matched = [{ path: "/", meta: { title: "首页" } }].concat(matched);
       }
-      console.log(matched);
       this.levelList = matched;
     }
   },

@@ -57,7 +57,6 @@ export default {
     handleSelect(value) {
       this.product = "";
       this.$emit("productInfo", value);
-      console.log(value);
     }
   }
 };

@@ -2,7 +2,7 @@
   <el-table
     show-summary
     :summary-method="getSummaries"
-    :data="tablelist"
+    :data="tableData"
     stripe
     style="width: 100%"
   >
@@ -16,7 +16,7 @@
       <template slot-scope="scope">
         <div v-if="status === 'edit'">
           <el-input
-            @keyup.alt.delete.native="deleteRow(scope.$index, tablelist)"
+            @keyup.alt.delete.native="deleteRow(scope.$index, tableData)"
             type="number"
             min="0"
             :class="numbersequal(scope.row.shuliang,scope.row.step)? '':'error'"
@@ -35,7 +35,7 @@
         <div v-if="status === 'edit'">
           <el-input
             type="number"
-            @keyup.alt.delete.native="deleteRow(scope.$index, tablelist)"
+            @keyup.alt.delete.native="deleteRow(scope.$index, tableData)"
             v-model="scope.row.price"
           ></el-input>
         </div>
@@ -66,7 +66,8 @@ export default {
   },
   data() {
     return {
-      tableData: []
+      tableData: this.tablelist,
+      sumPrices: []
     };
   },
   methods: {
@@ -85,6 +86,7 @@ export default {
       console.log(row, index);
     },
     getSummaries(param) {
+      let this_ = this;
       const { columns, data } = param;
       const sums = [];
       let values = [];
@@ -95,7 +97,7 @@ export default {
         }
         if (column.property === "heji") {
           values = data.map(item =>
-            Number(this.multiplication(item.shuliang, item.price))
+            Number(this_.multiplication(item.shuliang, item.price))
           );
         }
         if (index === 9) {
@@ -107,12 +109,12 @@ export default {
               return prev;
             }
           }, 0);
-          sums[index] += " 元";
+          sums[index] += "";
         } else {
           sums[index] = "";
         }
       });
-
+      this_.sumPrices = sums;
       return sums;
     },
     deleteRow(index, rows) {

@@ -6,9 +6,12 @@
       <el-tag size="mini">新建单据</el-tag>
     </div>
     <div class="fillIn-body">
-      <PurchasePlan @wanglaiInfo="wanglaiInfo"></PurchasePlan>
-      <ProductTable :status="'edit'" :tablelist="tableList"></ProductTable>
+      <PurchasePlan :type="1" ref="childPlan" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
+      <ProductTable ref="childTable" :status="'edit'" :tablelist="tableList"></ProductTable>
       <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c"></ProductInput>
+      <div>
+        <el-button @click="sendDraft">保存草稿</el-button>
+      </div>
     </div>
     <div class="fillIn-footer">
       <span>删除行：Alt + Del</span>
@@ -40,11 +43,14 @@ export default {
     wanglaiInfo(value) {
       this.wanglaiList = value;
       this.fanwei_c = value.fanwei_c.split(",");
-      console.log(value, "*******");
     },
     productInfo(value) {
-      console.log(value, "-------------");
       this.tableList.push(value);
+    },
+    sendDraft() {
+      console.log(this.$refs.childPlan.uploadData);
+      console.log(this.$refs.childTable.tableData);
+      console.log(this.$refs.childTable.sumPrices);
     }
   }
 };
