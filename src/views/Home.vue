@@ -14,7 +14,7 @@
         >
           <el-submenu index="1">
             <template slot="title">采购</template>
-            <el-menu-item index="/test">test</el-menu-item>
+            <el-menu-item index="/danju">采购计划单列表</el-menu-item>
             <el-menu-item index="/fillIn">填写采购计划单</el-menu-item>
             <el-menu-item index="1-3">选项3</el-menu-item>
             <el-submenu index="1-4">
@@ -36,7 +36,7 @@
               <el-menu-item index="2-4-3">选项3</el-menu-item>
             </el-submenu>
           </el-submenu>
-          <el-menu-item index="3" disabled>消息中心</el-menu-item>
+          <el-menu-item index="/caogao">草稿箱</el-menu-item>
           <el-menu-item index="4">
             <a href="https://www.ele.me" target="_blank">订单管理</a>
           </el-menu-item>

@@ -109,7 +109,7 @@ const danjuIndex = [{
         "type": 1,
         "date": "2020-02-08",
         "danhao": "CD20200208000102",
-        "beizhu": "",
+        "beizhu": "123123",
         "zhaiyao": "",
         "dateline": ""
     },
@@ -150,6 +150,7 @@ const danjuIndex = [{
 const danjuList = [{
     "dl_id": 1,
     "di_id": 1,
+    "name": "盐酸肾上腺素注射液",
     "psk_id": 0,
     "bp_id": 1,
     "pihao": "",
@@ -160,6 +161,7 @@ const danjuList = [{
 }, {
     "dl_id": 2,
     "di_id": 1,
+    "name": "盐酸肾上腺素注射液",
     "psk_id": 0,
     "bp_id": 1,
     "pihao": "",
@@ -170,6 +172,7 @@ const danjuList = [{
 }, {
     "dl_id": 3,
     "di_id": 1,
+    "name": "盐酸肾上腺素注射液",
     "psk_id": 0,
     "bp_id": 1,
     "pihao": "",
@@ -180,6 +183,7 @@ const danjuList = [{
 }, {
     "dl_id": 4,
     "di_id": 2,
+    "name": "盐酸肾上腺素注射液",
     "psk_id": 0,
     "bp_id": 1,
     "pihao": "",
@@ -190,6 +194,7 @@ const danjuList = [{
 }, {
     "dl_id": 5,
     "di_id": 2,
+    "name": "盐酸肾上腺素注射液",
     "psk_id": 0,
     "bp_id": 1,
     "pihao": "",

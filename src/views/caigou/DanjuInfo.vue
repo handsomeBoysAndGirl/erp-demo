@@ -2,16 +2,13 @@
   <!-- 填写采购计划单 -->
   <section>
     <div class="fillIn-header">
-      <h1>填写采购计划单</h1>
-      <el-tag size="mini">新建单据</el-tag>
+      <h1>采购计划单详情</h1>
+      <el-tag size="mini">审核中</el-tag>
     </div>
     <div class="fillIn-body">
-      <PurchasePlan :type="1" ref="childPlan" :uploaddata="uploadData" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
-      <ProductTable ref="childTable" :status="'edit'" :tablelist="tableList"></ProductTable>
-      <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c"></ProductInput>
+      <PurchasePlan :uploaddata="danjuList" :type="1" ref="childPlan" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
+      <ProductTable ref="childTable" :status="'123'" :tablelist="tableList"></ProductTable>
       <div class="caozuo">
-        <el-button @click="sendDraft">保存草稿</el-button>
-        <el-button @click="sendDraft">审核单据</el-button>
         <el-button @click="sendDraft">退出</el-button>
       </div>
     </div>
@@ -24,34 +21,19 @@
 <script>
 import PurchasePlan from "@/components/caigou/PurchasePlan";
 import ProductTable from "@/components/caigou/ProductTable";
-import ProductInput from "@/components/caigou/ProductInput";
 export default {
   name: "fillIn",
   components: {
     PurchasePlan,
-    ProductTable,
-    ProductInput
+    ProductTable
   },
   data() {
     return {
-      fanwei_c: [],
       wanglaiList: {
         bw_id: "0"
       },
       tableList: [],
-      uploadData: {
-        wanglai: "",
-        bw_id: "", //往来抬头
-        be_id: "", //经手人
-        be_id2: "", //制单人
-        be_id3: "", //审核人
-        be_id4: "", //产品经理
-        type: 1, //单据类型
-        date: "", //单据日期
-        danhao: "", //单号
-        beizhu: "",
-        zhaiyao: ""
-      }
+      danjuList: {}
     };
   },
   methods: {
@@ -59,23 +41,34 @@ export default {
       this.wanglaiList = value;
       this.fanwei_c = value.fanwei_c.split(",");
     },
-    productInfo(value) {
-      this.tableList.push(value);
-    },
     sendDraft() {
       console.log(this.$refs.childPlan.uploadData);
       console.log(this.$refs.childTable.tableData);
       console.log(this.$refs.childTable.sumPrices);
+    },
+    getdanjuInfo(di_id) {
+      this.$axios
+        .post("/api/danjuIndex")
+        .then(res => {
+          this.danjuList = res.data[parseInt(di_id) - 1];
+          console.log(this.danjuList);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      this.$axios
+        .post("/api/danjuList")
+        .then(res => {
+          console.log(res.data);
+          this.tableList = res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   created() {
-    if (this.$route.query.di_id) {
-      console.log(123);
-      //uploadData
-      //tableList
-    } else {
-      console.log("no");
-    }
+    this.getdanjuInfo(this.$route.params.di_id);
   }
 };
 </script>

@@ -14,14 +14,33 @@ const routes = [{
       noCache: true
     },
     children: [{
-        path: "/test",
-        name: "test",
-        component: () => import('../views/caigou/Test.vue'),
+        path: "/danju",
+        name: "danju",
+        component: () => import('../views/danju/Danju.vue'),
         meta: {
-          title: '采购计划单列表',
+          title: '采购',
           icon: 'dashboard',
           noCache: true
-        }
+        },
+        children: [{
+          path: "/",
+          name: "danjulist",
+          component: () => import('../views/caigou/DanjuList.vue'),
+          meta: {
+            title: '采购计划单列表',
+            icon: 'dashboard',
+            noCache: true
+          }
+        }, {
+          path: "/info/:di_id",
+          name: "danjuinfo",
+          component: () => import('../views/caigou/DanjuInfo.vue'),
+          meta: {
+            title: '采购计划单详情',
+            icon: 'dashboard',
+            noCache: true
+          }
+        }]
       },
       {
         path: "/fillIn",
@@ -29,6 +48,16 @@ const routes = [{
         component: () => import('../views/caigou/FillIn.vue'),
         meta: {
           title: '填写采购计划单',
+          icon: 'dashboard',
+          noCache: true
+        }
+      },
+      {
+        path: "/caogao",
+        name: "caogao",
+        component: () => import('../views/danju/CaoGao.vue'),
+        meta: {
+          title: '草稿箱',
           icon: 'dashboard',
           noCache: true
         }

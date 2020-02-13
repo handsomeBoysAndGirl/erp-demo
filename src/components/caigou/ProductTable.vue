@@ -66,9 +66,15 @@ export default {
   },
   data() {
     return {
-      tableData: this.tablelist,
+      tableData: [],
       sumPrices: []
     };
+  },
+  watch: {
+    tablelist(val) {
+      this.tableData = val;
+      console.log(val);
+    }
   },
   methods: {
     //求余精度处理
@@ -121,6 +127,9 @@ export default {
       console.log(1);
       rows.splice(index, 1);
     }
+  },
+  created() {
+    console.log(this.tablelist, "-----");
   }
 };
 </script>

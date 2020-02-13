@@ -1,11 +1,11 @@
 <template>
   <!-- 采购计划单 -->
   <section>
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+    <el-form :inline="true" :model="uploadData" class="demo-form-inline">
       <el-form-item label="供应商">
         <el-autocomplete
           class="inline-input"
-          v-model="formInline.wanglai"
+          v-model="uploadData.wanglai"
           :fetch-suggestions="querySearch"
           value-key="name"
           placeholder="请输入内容"
@@ -30,7 +30,7 @@
       </el-form-item>
 
       <el-form-item label="单据日期">
-        <el-date-picker disabled v-model="uploadData.data" type="date" placeholder="选择日期"></el-date-picker>
+        <el-date-picker disabled v-model="uploadData.date" type="date" placeholder="选择日期"></el-date-picker>
       </el-form-item>
 
       <el-form-item label="单据编号">
@@ -55,30 +55,22 @@ export default {
     dtype: {
       type: Number,
       default: 0
+    },
+    uploaddata: {
+      type: Object,
+      default: {}
     }
   },
   data() {
     return {
-      formInline: {
-        wanglai: "",
-        data: "",
-        region: ""
-      },
-      uploadData: {
-        bw_id: "", //往来抬头
-        be_id: "", //经手人
-        be_id2: "", //制单人
-        be_id3: "", //审核人
-        be_id4: "", //产品经理
-        type: this.dtype, //单据类型
-        date: "", //单据日期
-        danhao: "", //单号
-        beizhu: "",
-        data: "",
-        zhaiyao: ""
-      },
+      uploadData: {},
       userInfo: {}
     };
+  },
+  watch: {
+    uploaddata(val) {
+      this.uploadData = val;
+    }
   },
   methods: {
     querySearch(queryString, cb) {
