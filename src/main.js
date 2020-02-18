@@ -11,7 +11,7 @@ import Mock from '@/mock/caigou'
 import "./mock"
 
 
-//Vue.prototype.$axios = axios
+Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false
 
