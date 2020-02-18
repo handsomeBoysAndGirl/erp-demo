@@ -3,14 +3,65 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-    meta:{
-      keepAlive:true
-    }
+const routes = [{
+    path: '/home',
+    name: 'home',
+    component: () => import('../views/danju/Danju.vue'),
+    meta: {
+      title: '首页',
+      icon: 'dashboard',
+      noCache: true
+    },
+    children: [{
+        path: "/danju",
+        name: "danju",
+        component: () => import('../views/danju/Danju.vue'),
+        meta: {
+          title: '采购',
+          icon: 'dashboard',
+          noCache: true
+        },
+        children: [{
+          path: "/",
+          name: "danjulist",
+          component: () => import('../views/caigou/DanjuList.vue'),
+          meta: {
+            title: '采购计划单列表',
+            icon: 'dashboard',
+            noCache: true
+          }
+        }, {
+          path: "/info/:di_id",
+          name: "danjuinfo",
+          component: () => import('../views/caigou/DanjuInfo.vue'),
+          meta: {
+            title: '采购计划单详情',
+            icon: 'dashboard',
+            noCache: true
+          }
+        }]
+      },
+      {
+        path: "/fillIn",
+        name: "fillIn",
+        component: () => import('../views/caigou/FillIn.vue'),
+        meta: {
+          title: '填写采购计划单',
+          icon: 'dashboard',
+          noCache: true
+        }
+      },
+      {
+        path: "/caogao",
+        name: "caogao",
+        component: () => import('../views/danju/CaoGao.vue'),
+        meta: {
+          title: '草稿箱',
+          icon: 'dashboard',
+          noCache: true
+        }
+      },
+    ]
   },
   {
     path: '/about',
@@ -18,7 +69,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
     path: '/login',
@@ -26,9 +77,9 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/login/Login.vue'),
-    meta:{
-      keepAlive:false
+    component: () => import( /* webpackChunkName: "about" */ '../views/login/Login.vue'),
+    meta: {
+      keepAlive: false
     }
   }
 ]
