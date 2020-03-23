@@ -17,24 +17,11 @@
             <el-menu-item index="/danju">采购计划单列表</el-menu-item>
             <el-menu-item index="/fillIn">填写采购计划单</el-menu-item>
             <el-menu-item index="1-3">选项3</el-menu-item>
-            <el-submenu index="1-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-              <el-menu-item index="1-4-2">选项2</el-menu-item>
-              <el-menu-item index="1-4-3">选项3</el-menu-item>
-            </el-submenu>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">销售</template>
-            <el-menu-item index="2-1">选项1</el-menu-item>
-            <el-menu-item index="2-2">选项2</el-menu-item>
-            <el-menu-item index="2-3">选项3</el-menu-item>
-            <el-submenu index="2-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="2-4-1">选项1</el-menu-item>
-              <el-menu-item index="2-4-2">选项2</el-menu-item>
-              <el-menu-item index="2-4-3">选项3</el-menu-item>
-            </el-submenu>
+            <el-menu-item index="/newsale">编辑销售订单</el-menu-item>
+            <el-menu-item index="/allsale">销售单据一览</el-menu-item>
           </el-submenu>
           <el-menu-item index="/caogao">草稿箱</el-menu-item>
           <el-menu-item index="4">

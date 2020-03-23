@@ -20,6 +20,10 @@
 export default {
   name: "productInput",
   props: {
+    dtype: {
+      type: Number,
+      default:1
+    },
     bwid: {
       type: String,
       default: "0"
@@ -57,14 +61,21 @@ export default {
     handleSelect(value) {
       this.product = "";
       this.$emit("productInfo", value);
+      
+      if(this.dtype == 2){
+            alert(1);
+      }
     }
   }
 };
 </script>
 
 <style scoped>
+.productInput {
+  width:100%;
+}
 .productInput >>> div {
-  width: 1600px;
+  width: 100%;
 }
 .productInput-box {
   padding: 15px 0 0 0;

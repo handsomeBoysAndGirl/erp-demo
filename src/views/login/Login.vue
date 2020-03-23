@@ -84,7 +84,7 @@ export default {
         message: `欢迎您，${data.name}!`,
         duration: 3000
       });
-      this.$router.replace({ path: "/" });
+      this.$router.replace({ path: "/home" });
     }
   },
   created() {},

@@ -2,7 +2,7 @@
   <!-- 采购计划单 -->
   <section>
     <el-form :inline="true" :model="uploadData" class="demo-form-inline">
-      <el-form-item label="供应商">
+      <el-form-item :label="dtype == 1 ? '供应商' : '客户'">
         <el-autocomplete
           class="inline-input"
           v-model="uploadData.wanglai"
@@ -17,6 +17,32 @@
           </template>
         </el-autocomplete>
       </el-form-item>
+            <el-form-item label="单据编号">
+        <el-input disabled v-model="uploadData.danhao"></el-input>
+      </el-form-item>
+          <el-form-item label="单据日期">
+        <el-date-picker
+          disabled
+          v-model="uploadData.date"
+          type="date"
+          placeholder="选择日期"
+        ></el-date-picker>
+      </el-form-item>
+      <br>
+      <el-form-item label="销售范围">
+        <el-tag type="success">标签二</el-tag>
+        <el-tag type="success">标签二</el-tag>
+        <el-tag type="success">标签二</el-tag>
+        <el-tag type="success">标签二</el-tag>
+      </el-form-item>
+
+      <el-form-item label="控销范围">
+        <el-tag type="danger">标签五</el-tag>
+        <el-tag type="danger">标签五</el-tag>
+        <el-tag type="danger">标签五</el-tag>
+        <el-tag type="danger">标签五</el-tag>
+      </el-form-item>
+      <br>
       <el-form-item label="经手人">
         <el-input v-model="userInfo.name"></el-input>
       </el-form-item>
@@ -29,18 +55,13 @@
         <el-input v-model="userInfo.name"></el-input>
       </el-form-item>
 
-      <el-form-item label="单据日期">
-        <el-date-picker disabled v-model="uploadData.date" type="date" placeholder="选择日期"></el-date-picker>
-      </el-form-item>
+  
 
-      <el-form-item label="单据编号">
-        <el-input disabled v-model="uploadData.danhao"></el-input>
-      </el-form-item>
+
 
       <el-form-item label="摘要">
         <el-input style="width:500px" v-model="uploadData.zhaiyao"></el-input>
       </el-form-item>
-
       <el-form-item label="备注">
         <el-input style="width:500px" v-model="uploadData.beizhu"></el-input>
       </el-form-item>
@@ -49,12 +70,13 @@
 </template>
 
 <script>
+import { wanglai } from "@/utils/api";
 export default {
   name: "purchasePlan",
   props: {
     dtype: {
       type: Number,
-      default: 0
+      default: 1
     },
     uploaddata: {
       type: Object,
@@ -69,15 +91,22 @@ export default {
   },
   watch: {
     uploaddata(val) {
+      console.log(val, "**************12313********");
       this.uploadData = val;
+    },
+    dtype(val) {
+      console.log(val);
     }
   },
   methods: {
     querySearch(queryString, cb) {
-      this.$axios
-        .post("/api/wanglai")
+      wanglai({ type: this.dtype })
         .then(res => {
-          cb(res.data);
+          res.forEach(item => {
+            item.value = `${item.name}  ${item.suoxie}`;
+          });
+          console.log(res);
+          cb(res);
         })
         .catch(err => {
           console.log(err);

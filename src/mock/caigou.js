@@ -5,6 +5,9 @@ const data = {
     "name": "@cname",
 };
 
+const Domain = "http://localhost:8089";
+
+//供应商
 const wanglai = [{
         "bw_id": "3",
         "name": "贵州九州通达医药有限公司",
@@ -30,6 +33,37 @@ const wanglai = [{
         "value": "遵义市银花药业有限公司  ZYSYHYYYXGS 正常销售"
     }
 ]
+
+const kehu = [
+    {
+        bw_id: "94",
+        fanwei_c: "zcy,ptyp,ksszj,tsypffzj,tsyp",
+        fw: {zcy: "中成药", ptyp: "化学药制剂", ksszj: "抗生素", tsypffzj: "含特殊药品复方制剂", tsyp: "特殊药品"},
+        fwc: {1: "含特殊药品复方制剂"},
+        is_tingshou: "2",
+        name: "瓮安县四宜药业有限公司",
+        suoxie: "WAXSYYYYXGS"
+    },{
+        bw_id: "106",
+        fanwei_c: "zyyp,zcy,ptyp,ksszj,tsypffzj,tsyp,zyc",
+        fw: {zyyp: "中药饮片", zcy: "中成药", ptyp: "化学药制剂", ksszj: "抗生素", tsypffzj: "含特殊药品复方制剂", tsyp: "特殊药品"},
+        ksszj: "抗生素",
+        ptyp: "化学药制剂",
+        tsyp: "特殊药品",
+        tsypffzj: "含特殊药品复方制剂",
+        zcy: "中成药",
+        zyc: "中药材",
+        zyyp: "中药饮片",
+        fwc: {1: "含特殊药品复方制剂"},
+        is_tingshou: "2",
+        name: "清镇市暗流镇卫生院",
+        suoxie: "QZSALZWSY"
+    }
+
+]
+
+
+
 
 const user = {
     "be_id": "39",
@@ -205,12 +239,19 @@ const danjuList = [{
 }]
 
 Mock.mock('/api/test', 'post', data)
-Mock.mock('/api/wanglai', 'post', wanglai)
+Mock.mock(`${Domain}/api/wanglai`, 'post', opts=>{
+    let pramas = JSON.parse(`${opts.body}`)
+    let arrs = [];
+    pramas.type == 1? arrs = wanglai:arrs=kehu
+    console.log(arrs,"***************")
+    return arrs;
+})
 Mock.mock('/api/product', 'post', product)
 Mock.mock('/api/user', 'post', user)
 Mock.mock('/api/basicInformation', 'post', basicInformation)
 Mock.mock('/api/danjuIndex', 'post', danjuIndex)
 Mock.mock('/api/danjuList', 'post', danjuList)
 
+Mock.mock(`${Domain}/api`)
 
 export default Mock;

@@ -6,7 +6,7 @@
       <el-tag size="mini">新建单据</el-tag>
     </div>
     <div class="fillIn-body">
-      <PurchasePlan :type="1" ref="childPlan" :uploaddata="uploadData" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
+      <PurchasePlan :dtype="1" ref="childPlan" :uploaddata="uploadData" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
       <ProductTable ref="childTable" :status="'edit'" :tablelist="tableList"></ProductTable>
       <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c"></ProductInput>
       <div class="caozuo">
@@ -63,9 +63,9 @@ export default {
       this.tableList.push(value);
     },
     sendDraft() {
-      console.log(this.$refs.childPlan.uploadData);
-      console.log(this.$refs.childTable.tableData);
-      console.log(this.$refs.childTable.sumPrices);
+      // console.log(this.$refs.childPlan.uploadData);
+      // console.log(this.$refs.childTable.tableData);
+      // console.log(this.$refs.childTable.sumPrices);
     }
   },
   created() {

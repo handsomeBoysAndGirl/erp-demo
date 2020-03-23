@@ -122,9 +122,6 @@ export function get(url, params) {
 }
 
 export function post(url, params) {
-    console.log(params)
-    const token = "123" // window.localStorage.getItem("token");
-    axios.defaults.headers.common['token'] = token;
     return new Promise((resolve, reject) => {
         axios.post(url,JSON.stringify(params)).then(res => {
             resolve(res.data)
