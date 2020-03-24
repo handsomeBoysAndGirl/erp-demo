@@ -9,6 +9,7 @@
           :fetch-suggestions="querySearch"
           value-key="name"
           placeholder="请输入内容"
+          
           :trigger-on-focus="false"
           @select="handleSelect"
         >
@@ -29,18 +30,12 @@
         ></el-date-picker>
       </el-form-item>
       <br>
-      <el-form-item label="销售范围">
-        <el-tag type="success">标签二</el-tag>
-        <el-tag type="success">标签二</el-tag>
-        <el-tag type="success">标签二</el-tag>
-        <el-tag type="success">标签二</el-tag>
+      <el-form-item label="销售范围" v-show="uploadData.wanglai != null && uploadData.wanglai.length>0">
+        <el-tag type="success" v-for="(item,index) in allowfw" :key='index'>{{item}}</el-tag>
       </el-form-item>
 
-      <el-form-item label="控销范围">
-        <el-tag type="danger">标签五</el-tag>
-        <el-tag type="danger">标签五</el-tag>
-        <el-tag type="danger">标签五</el-tag>
-        <el-tag type="danger">标签五</el-tag>
+      <el-form-item label="控销范围" v-show="uploadData.wanglai != null && uploadData.wanglai.length>0">
+        <el-tag type="danger" v-for="(item,index) in banfw" :key='index'>{{item}}</el-tag>
       </el-form-item>
       <br>
       <el-form-item label="经手人">
@@ -86,13 +81,15 @@ export default {
   data() {
     return {
       uploadData: {},
-      userInfo: {}
+      userInfo: {},
+      allowfw:{},
+      banfw:{}
     };
   },
   watch: {
     uploaddata(val) {
-      console.log(val, "**************12313********");
       this.uploadData = val;
+      console.log(val,"999999999999999999999999")
     },
     dtype(val) {
       console.log(val);
@@ -105,7 +102,6 @@ export default {
           res.forEach(item => {
             item.value = `${item.name}  ${item.suoxie}`;
           });
-          console.log(res);
           cb(res);
         })
         .catch(err => {
@@ -114,6 +110,8 @@ export default {
     },
     handleSelect(item) {
       this.$emit("wanglaiInfo", item);
+      this.allowfw = item.fw;
+      this.banfw = item.fwc;
       this.uploadData.bw_id = item.bw_id;
     },
     getUserInfo() {

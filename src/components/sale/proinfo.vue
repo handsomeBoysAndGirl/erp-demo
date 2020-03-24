@@ -9,30 +9,30 @@
       name="1"
       style="border-top:2px solid #409EFF;"
     >
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form label-width="80px">
         <el-form-item label="名称:">
-          <span>{{ form.name }}</span>
+          <span>{{ proinfos.name }}</span>
         </el-form-item>
-        <el-form-item label="规格:">
-          <span>{{ form.name }}</span>
+        <el-form-item label="规格:"> 
+          <span>{{ proinfos.info }}</span>
         </el-form-item>
         <el-form-item label="厂家:">
-          <span>{{ form.name }}</span>
+          <span>{{ proinfos.factory }}</span>
         </el-form-item>
         <el-form-item label="剂型:">
-          <span>{{ form.name }}</span>
+          <span>{{ proinfos.jx }}</span>
         </el-form-item>
         <el-form-item label="销售基数:">
-          <span>{{ form.name }}</span>
+          <span>{{ proinfos.ean_step }}{{ proinfos.danwei}}</span>
         </el-form-item>
         <el-form-item label="当前库存:">
-          <span>{{ form.name }}</span>
+          <span>{{ proinfos.maxshuliang }}</span>
         </el-form-item>
         <el-form-item label="采购价:">
-          <span>{{ form.name }}</span>
+          <span>{{ proinfos.cb }}</span>
         </el-form-item>
         <el-form-item label="件装数量:">
-          <span>{{ form.name }}</span>
+          <span>{{ proinfos.jianzhuang }}</span>
         </el-form-item>
       </el-form>
     </el-collapse-item>
@@ -53,42 +53,26 @@
 </template>
 <script>
 export default {
+    props: {
+    proinfo: {
+      type: Object,
+      default:()=>{ return {}}
+    }
+  },
+  watch:{
+     proinfo(val){
+        this.proinfos = val
+        if(val != null){
+          this.activeNames = ["1","2"]
+        }
+     } 
+  },
   data() {
     return {
+      proinfos:{},
       showbox: false,
       activeNames: [],
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "10",
-          address: "40"
-        },
-        {
-          date: "2016-05-02",
-          name: "10",
-          address: "40"
-        },
-        {
-          date: "2016-05-02",
-          name: "10",
-          address: "40"
-        },
-        {
-          date: "2016-05-02",
-          name: "10",
-          address: "40"
-        }
-      ]
+      tableData:[]
     };
   },
   destroyed() {
@@ -103,7 +87,6 @@ export default {
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      console.log(scrollTop);
       scrollTop >= 150 ? (this.showbox = true) : (this.showbox = false);
     },
     handleChange(val) {

@@ -1,5 +1,6 @@
 <template>
   <div class="productInput-box">
+     <ChoosePro ref="choosepro" @selectedData= "handleSaleSelect"></ChoosePro>
     <el-autocomplete
       class="productInput"
       v-model="product"
@@ -17,7 +18,12 @@
 </template>
 
 <script>
+
+import ChoosePro from "@/components/sale/choosePro"
 export default {
+  components: {
+    ChoosePro
+  },
   name: "productInput",
   props: {
     dtype: {
@@ -60,11 +66,16 @@ export default {
     },
     handleSelect(value) {
       this.product = "";
-      this.$emit("productInfo", value);
-      
       if(this.dtype == 2){
-            alert(1);
+            this.$refs.choosepro.switchPro(value.bp_id,value.name,this.bwid)
+
+      }else{
+        this.$emit("productInfo", value);
       }
+    },
+    handleSaleSelect(value){
+        this.product = "";
+         this.$emit("productInfo", value);
     }
   }
 };

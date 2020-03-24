@@ -2,7 +2,7 @@
   <!-- 采购计划单 -->
   <section>
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
-      <el-form-item label="供应商">
+      <el-form-item :label="dtype == 1 ? '供应商' : '客户'">
         <el-autocomplete
           class="inline-input"
           v-model="formInline.wanglai"

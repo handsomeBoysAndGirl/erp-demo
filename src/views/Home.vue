@@ -21,7 +21,7 @@
           <el-submenu index="2">
             <template slot="title">销售</template>
             <el-menu-item index="/newsale">编辑销售订单</el-menu-item>
-            <el-menu-item index="/allsale">销售单据一览</el-menu-item>
+            <el-menu-item index="/saleList">销售单据一览</el-menu-item>
           </el-submenu>
           <el-menu-item index="/caogao">草稿箱</el-menu-item>
           <el-menu-item index="4">

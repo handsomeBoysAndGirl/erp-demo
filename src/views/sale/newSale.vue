@@ -1,7 +1,6 @@
 <template>
   <!-- 填写销售计划单 -->
   <section>
-    <ChoosePro></ChoosePro>
     <div class="fillIn-header">
       <h1>填写销售订单</h1>
       <el-tag size="mini">新建单据</el-tag>
@@ -19,6 +18,7 @@
             ref="childTable"
             :status="'edit'"
             :tablelist="tableList"
+            @hasSelectedRows="hasSelectedRow"
           ></ProductTable>
           <ProductInput
             @productInfo="productInfo"
@@ -37,7 +37,7 @@
           </div>
         </el-main>
         <el-aside width="200px" style="">
-          <ProInfo ref="proinfo"> </ProInfo>
+          <ProInfo ref="proinfo" :proinfo = "proinfos"> </ProInfo>
         </el-aside>
       </el-container>
     </div>
@@ -49,23 +49,23 @@ import PurchasePlan from "@/components/caigou/PurchasePlan";
 import ProductTable from "@/components/caigou/ProductTable";
 import ProductInput from "@/components/caigou/ProductInput";
 import ProInfo from "@/components/sale/proinfo";
-import ChoosePro from "@/components/sale/choosePro"
 export default {
   name: "fillIn",
   components: {
     PurchasePlan,
     ProductTable,
     ProductInput,
-    ProInfo,
-    ChoosePro
+    ProInfo
   },
   data() {
     return {
+      proinfos:{},
       fanwei_c: [],
       wanglaiList: {
         bw_id: "0"
       },
       scrollDom:null,
+      canPush:true,
       tableList: [],
       uploadData: {
         wanglai: "",
@@ -83,12 +83,30 @@ export default {
     };
   },
   methods: {
+    hasSelectedRow(val){
+      console.log(val,"88888888")
+        this.proinfos = val
+    },
     wanglaiInfo(value) {
       this.wanglaiList = value;
       this.fanwei_c = value.fanwei_c.split(",");
     },
+    checkArrIsSagle(value){
+     this.tableList.some(item=>{if(item.bp_id == value.bp_id){
+        this.canPush = false
+     }})
+    },
     productInfo(value) {
-      this.tableList.push(value);
+         this.checkArrIsSagle(value)
+         if(this.canPush){
+              this.tableList.push(value)
+         }else{
+           this.$message({
+             type:'warning',
+             message:'请勿选择相同的药！'
+           })
+         }
+      
     },
     sendDraft() {
       console.log(this.$refs.childPlan.uploadData);

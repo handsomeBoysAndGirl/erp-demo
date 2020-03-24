@@ -39,6 +39,16 @@ const routes = [{
             icon: 'dashboard',
             noCache: true
           }
+        },
+        {
+          path: "/saleList",
+          name: "saleList",
+          component: () => import('../views/sale/allsale.vue'),
+          meta: {
+            title: '销售单据一览',
+            icon: 'dashboard',
+            noCache: true
+          }
         }]
       },
       {
@@ -76,15 +86,12 @@ const routes = [{
   {
     path: '/about',
     name: 'about',
-    component: () => import( /* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import( '../views/About.vue')
   },
   {
     path: '/login',
     name: 'login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import( /* webpackChunkName: "about" */ '../views/login/Login.vue'),
+    component: () => import( '../views/login/Login.vue'),
     meta: {
       keepAlive: false
     }

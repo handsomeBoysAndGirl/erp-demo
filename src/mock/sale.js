@@ -37,7 +37,25 @@ Mock.mock(`${Domain}/api/login`, 'post', opts => {
     return data;
 });
 
+import {all_sku_data} from './data.js'
 
+Mock.mock(`${Domain}/api/allsku`, 'post', opts => {
+    let optss = JSON.parse(`${opts.body}`)
+    let data = {
+        code: -1,
+        msg: '',
+        token: '',
+        name: '',
+    }
+    if (optss.bw_id != "" && optss.bp_id != "" && optss.term != "") {
+        data.code = 1;
+        data.msg = "success";
+        data.data = all_sku_data;
+        return data;
+
+    }
+    return data;
+});
 //获取数据拦截
 Mock.mock(`${Domain}/api`)
 export default Mock;

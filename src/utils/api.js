@@ -6,3 +6,7 @@ export const apiLogin = data => post("/api/login",data);
 
 //获取往来单位
 export const wanglai = data => post("/api/wanglai",data);
+
+//获取销售的具体药品
+export const getskuall = data =>post("/api/allsku",data);
+

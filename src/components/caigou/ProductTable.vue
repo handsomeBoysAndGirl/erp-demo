@@ -3,15 +3,16 @@
     show-summary
     :summary-method="getSummaries"
     :data="tableData"
+    @cell-click="hasSelectedRow"
     stripe
     style="width: 100%"
   >
     <el-table-column type="index" width="50"></el-table-column>
     <el-table-column prop="name" label="品名" width="180"></el-table-column>
-    <el-table-column prop="name" label="产品相关信息" width="180"></el-table-column>
-    <el-table-column prop="step" label="批号"></el-table-column>
-    <el-table-column prop="address" label="生产日期"></el-table-column>
-    <el-table-column prop="address" label="有效期"></el-table-column>
+    <el-table-column prop="info" label="产品相关信息" width="180"></el-table-column>
+    <el-table-column prop="pihao" label="批号"></el-table-column>
+    <el-table-column prop="riqi" label="生产日期"></el-table-column>
+    <el-table-column prop="xiaoqi" label="有效期"></el-table-column>
     <el-table-column label="数量">
       <template slot-scope="scope">
         <div v-if="status === 'edit'">
@@ -77,6 +78,9 @@ export default {
     }
   },
   methods: {
+    hasSelectedRow(row){
+        this.$emit('hasSelectedRows',row)
+    },
     //求余精度处理
     numbersequal(a, b) {
       let number = 10000;
