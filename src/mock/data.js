@@ -31,3 +31,75 @@ export const  all_sku_data = [{
     "cb": "2.050",
     "info": "2ml*10"
 }]
+
+
+export const all_saleData = [ 
+    {
+    "di_id": 1,
+    "bw_id": 3,
+    "be_id": 39,
+    "be_id2": 39,
+    "be_id3": 39,
+    "be_id4": 39,
+    "heji_pre": 2333,
+    "youhui": 100,
+    "type":2,
+    "runtype":2,
+    "wanglai":"遵义市睿芝健大药房",
+    "date": "2020-02-08",
+    "danhao": "CD20200208000104",
+    "beizhu": "剂民店",
+    "zhaiyao": "",
+    "dateline": ""
+    }, {
+        "di_id": 2,
+        "bw_id": 3,
+        "be_id": 39,
+        "be_id2": 39,
+        "be_id3": 39,
+        "be_id4": 39,
+        "heji_pre": 2333,
+        "youhui": 100,
+        "type":2,
+        "runtype":3,
+        "wanglai":"贵州省黔药堂医药连锁有限责任公司 ",
+        "date": "2020-02-08",
+        "danhao": "CD20200208000104",
+        "beizhu": "剂民店",
+        "zhaiyao": "",
+        "dateline": ""
+        }, {
+            "di_id": 3,
+            "bw_id": 3,
+            "be_id": 39,
+            "be_id2": 39,
+            "be_id3": 39,
+            "be_id4": 39,
+            "heji_pre": 2333,
+            "youhui": 100,
+            "type":2,
+            "runtype":3,
+            "wanglai":"	遵义英麒医院",
+            "date": "2020-02-08",
+            "danhao": "CD20200208000104",
+            "beizhu": "剂民店",
+            "zhaiyao": "",
+            "dateline": ""
+            }, {
+                "di_id": 4,
+                "bw_id": 3,
+                "be_id": 39,
+                "be_id2": 39,
+                "be_id3": 39,
+                "be_id4": 39,
+                "heji_pre": 2333,
+                "youhui": 100,
+                "type":2,
+                "runtype":1,
+                "wanglai":"遵义英麒医院",
+                "date": "2020-02-08",
+                "danhao": "CD20200208000104",
+                "beizhu": "",
+                "zhaiyao": "",
+                "dateline": ""
+                }]

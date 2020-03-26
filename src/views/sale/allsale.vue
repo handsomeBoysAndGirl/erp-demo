@@ -8,6 +8,7 @@
 
 <script>
 import Search from "@/components/caigou/Search";
+import {getAllSale} from "@/utils/api"
 import DanjuTable from "@/components/danju/danjuTable";
 export default {
   name: "caogao",
@@ -24,15 +25,7 @@ export default {
   },
   methods: {
     getDanjuList() {
-    //   this.$axios
-    //     .post("/api/danjuIndex")
-    //     .then(res => {
-    //       this.danjuList = res.data;
-    //       console.log(res);
-    //     })
-    //     .catch(err => {
-    //       console.log(err);
-    //     });
+      getAllSale().then(res=>{ this.danjuList = res}).catch(err=>{console.log(err)})
     },
     search(value) {
       this.searchInfo = value;
@@ -44,12 +37,11 @@ export default {
     },
     showInfo(value) {
       this.$router.push({
-        path: "/fillIn",
+        path: "/newsale",
         query: {
           di_id: value.di_id
         }
       });
-      console.log(value);
     }
   },
   created() {

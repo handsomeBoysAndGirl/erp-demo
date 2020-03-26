@@ -141,6 +141,7 @@ const danjuIndex = [{
         "heji_pre": 2333,
         "youhui": 100,
         "type": 1,
+        "runtype":4,
         "date": "2020-02-08",
         "danhao": "CD20200208000102",
         "beizhu": "123123",

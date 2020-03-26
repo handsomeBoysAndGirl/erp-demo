@@ -56,6 +56,12 @@ Mock.mock(`${Domain}/api/allsku`, 'post', opts => {
     }
     return data;
 });
+
+
+import {all_saleData} from './data.js'
+
+Mock.mock(`${Domain}/api/getallsale`, 'get',all_saleData);
+
 //获取数据拦截
 Mock.mock(`${Domain}/api`)
 export default Mock;
