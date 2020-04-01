@@ -3,11 +3,11 @@
     <div class="page-center">
       <div class="info">
         <div class="title">
-          <img src="@/assets/logo.png" alt />
-          <span>山海医药</span>
+          <!-- <img src="@/assets/logo.png" alt /> -->
+          <!-- <span>山海医药</span> -->
         </div>
         <div class="detail">
-          <span>山海医药有限公司</span>
+          <!-- <span>山海医药有限公司</span> -->
         </div>
       </div>
       <!-- 插槽 -->

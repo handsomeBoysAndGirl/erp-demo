@@ -18,6 +18,7 @@
             ref="childTable"
             :status="'edit'"
             :tablelist="tableList"
+            @deleteRow = "deleRows"
             @hasSelectedRows="hasSelectedRow"
           ></ProductTable>
           <ProductInput
@@ -83,6 +84,10 @@ export default {
     };
   },
   methods: {
+    deleRows(index){
+      this.tableList.splice(index, 1);
+      console.log(this.tableList,"*****************")
+    },
     hasSelectedRow(val){
       console.log(val,"88888888")
         this.proinfos = val
@@ -92,6 +97,7 @@ export default {
       this.fanwei_c = value.fanwei_c.split(",");
     },
     checkArrIsSagle(value){
+     this.canPush = true
      this.tableList.some(item=>{if(item.bp_id == value.bp_id){
         this.canPush = false
      }})

@@ -33,7 +33,6 @@ export default {
     },
     searchAll(value) {
       this.searchAllInfo = value;
-      console.log(value);
     },
     showInfo(value) {
       this.$router.push({

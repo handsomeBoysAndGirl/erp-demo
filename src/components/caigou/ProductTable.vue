@@ -128,8 +128,10 @@ export default {
       return sums;
     },
     deleteRow(index, rows) {
-      console.log(1);
-      rows.splice(index, 1);
+      console.log(index,rows);
+
+      //rows.splice(index, 1);
+      this.$emit('deleteRow',index)
     }
   },
   created() {
