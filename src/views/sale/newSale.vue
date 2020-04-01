@@ -63,7 +63,7 @@ export default {
     return {
       fanwei_c: [],
       wanglaiList: {
-        bw_id: "0"
+        bw_id: 0
       },
       scrollDom:null,
       tableList: [],
@@ -85,7 +85,7 @@ export default {
   methods: {
     wanglaiInfo(value) {
       this.wanglaiList = value;
-      this.fanwei_c = value.fanwei_c.split(",");
+      this.fanwei_c = value.fanwei.split(",");
     },
     productInfo(value) {
       this.tableList.push(value);

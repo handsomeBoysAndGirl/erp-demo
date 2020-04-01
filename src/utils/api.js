@@ -5,4 +5,4 @@ import {post,get} from './http'
 export const apiLogin = data => post("/api/login",data);
 
 //获取往来单位
-export const wanglai = data => post("/api/wanglai",data);
+export const wanglai = data => get("/api/wanglai",data);

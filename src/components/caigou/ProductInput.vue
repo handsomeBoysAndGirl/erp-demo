@@ -25,8 +25,8 @@ export default {
       default:1
     },
     bwid: {
-      type: String,
-      default: "0"
+      type: Number,
+      default: 0
     },
     fanweic: {
       type: Array,
@@ -49,14 +49,14 @@ export default {
   },
   methods: {
     querySearch(queryString, cb) {
-      this.$axios
-        .post("/api/product")
-        .then(res => {
-          cb(res.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      // this.$axios
+      //   .post("/api/product")
+      //   .then(res => {
+      //     cb(res.data);
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
     },
     handleSelect(value) {
       this.product = "";
