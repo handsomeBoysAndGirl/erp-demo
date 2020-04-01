@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     querySearch(queryString, cb) {
-      wanglai({ type: this.dtype })
+      wanglai({ dtype: this.dtype, name: queryString})
         .then(res => {
           res.forEach(item => {
             item.value = `${item.name}  ${item.suoxie}`;

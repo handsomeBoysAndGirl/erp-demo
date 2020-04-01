@@ -3,7 +3,9 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+  {path: '/',redirect: '/home'},
+  {
     path: '/home',
     name: 'home',
     component: () => import('../views/Home.vue'),

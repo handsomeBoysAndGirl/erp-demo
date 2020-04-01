@@ -31,8 +31,8 @@ export default {
       default:1
     },
     bwid: {
-      type: String,
-      default: "0"
+      type: Number,
+      default: 0
     },
     fanweic: {
       type: Array,
