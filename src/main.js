@@ -4,10 +4,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import router from './router'
 import axios from "./utils/http";
-import  './mock/caigou'
+// import  './mock/caigou'
 
 //saleMock  start
- import "./mock/sale"
+//  import "./mock/sale"
 
 
 Vue.prototype.$axios = axios

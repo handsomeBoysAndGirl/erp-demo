@@ -55,14 +55,14 @@ export default {
   },
   methods: {
     querySearch(queryString, cb) {
-      this.$axios
-        .post("/api/product")
-        .then(res => {
-          cb(res.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      // this.$axios
+      //   .post("/api/product")
+      //   .then(res => {
+      //     cb(res.data);
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
     },
     handleSelect(value) {
       this.product = "";

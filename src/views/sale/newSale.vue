@@ -63,7 +63,7 @@ export default {
       proinfos:{},
       fanwei_c: [],
       wanglaiList: {
-        bw_id: "0"
+        bw_id: 0
       },
       scrollDom:null,
       canPush:true,
@@ -94,7 +94,7 @@ export default {
     },
     wanglaiInfo(value) {
       this.wanglaiList = value;
-      this.fanwei_c = value.fanwei_c.split(",");
+      this.fanwei_c = value.fanwei.split(",");
     },
     checkArrIsSagle(value){
      this.canPush = true

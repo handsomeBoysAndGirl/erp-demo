@@ -97,36 +97,47 @@ export default {
   },
   methods: {
     querySearch(queryString, cb) {
-      wanglai({ dtype: this.dtype, name: queryString})
+      console.log(queryString);
+      // this.$axios
+      //   .post("/api/wanglai")
+      //   .then(res => {
+      //     console.log(res)
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+      wanglai({ dtype: this.dtype,name: this.uploadData.wanglai })
         .then(res => {
-          res.forEach(item => {
+          res.wanglaiInfo.forEach(item => {
+            console.log(item);
             item.value = `${item.name}  ${item.suoxie}`;
           });
-          cb(res);
+          cb(res.wanglaiInfo);
         })
         .catch(err => {
           console.log(err);
         });
     },
     handleSelect(item) {
+      console.log(item);
       this.$emit("wanglaiInfo", item);
       this.allowfw = item.fw;
       this.banfw = item.fwc;
       this.uploadData.bw_id = item.bw_id;
     },
     getUserInfo() {
-      this.$axios
-        .post("/api/user")
-        .then(res => {
-          this.uploadData.be_id = res.data.be_id;
-          this.uploadData.be_id2 = res.data.be_id;
-          this.uploadData.be_id3 = res.data.be_id;
-          this.uploadData.be_id4 = res.data.be_id;
-          this.userInfo = res.data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      // this.$axios
+      //   .post("/api/user")
+      //   .then(res => {
+      //     this.uploadData.be_id = res.data.be_id;
+      //     this.uploadData.be_id2 = res.data.be_id;
+      //     this.uploadData.be_id3 = res.data.be_id;
+      //     this.uploadData.be_id4 = res.data.be_id;
+      //     this.userInfo = res.data;
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
     },
     setTimeDateFmt(s) {
       // 个位数补齐十位数

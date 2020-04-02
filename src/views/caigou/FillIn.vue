@@ -10,7 +10,7 @@
       <ProductTable ref="childTable" :status="'edit'" :tablelist="tableList"></ProductTable>
       <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c"></ProductInput>
       <div class="caozuo">
-        <el-button @click="sendDraft">保存草稿</el-button>
+        <el-button @click="saveCaogao">保存草稿</el-button>
         <el-button @click="sendDraft">审核单据</el-button>
         <el-button @click="sendDraft">退出</el-button>
       </div>
@@ -63,6 +63,11 @@ export default {
       this.tableList.push(value);
     },
     sendDraft() {
+      // console.log(this.$refs.childPlan.uploadData);
+      // console.log(this.$refs.childTable.tableData);
+      // console.log(this.$refs.childTable.sumPrices);
+    },
+    saveCaogao() { //保存草稿
       // console.log(this.$refs.childPlan.uploadData);
       // console.log(this.$refs.childTable.tableData);
       // console.log(this.$refs.childTable.sumPrices);
