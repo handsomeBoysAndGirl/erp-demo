@@ -100,19 +100,9 @@ export default {
   },
   methods: {
     querySearch(queryString, cb) {
-      console.log(queryString);
-      // this.$axios
-      //   .post("/api/wanglai")
-      //   .then(res => {
-      //     console.log(res)
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
-      wanglai({ dtype: this.dtype,name: this.uploadData.wanglai })
+      wanglai({ dtype: this.dtype,name: queryString })
         .then(res => {
           res.wanglaiInfo.forEach(item => {
-            console.log(item);
             item.value = `${item.name}  ${item.suoxie}`;
           });
           cb(res.wanglaiInfo);
@@ -127,6 +117,13 @@ export default {
       this.uploadData.bw_id = item.bw_id;
     },
     getUserInfo() {
+      let user = JSON.parse(localStorage.getItem('userInfo'));
+      this.userInfo = user;
+      this.uploadData.be_id = 
+      this.uploadData.be_id2 = 
+      this.uploadData.be_id3 = 
+      this.uploadData.be_id4 = user.be_id;
+      console.log(user);
       // this.$axios
       //   .post("/api/user")
       //   .then(res => {

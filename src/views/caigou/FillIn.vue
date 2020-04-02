@@ -8,7 +8,7 @@
     <div class="fillIn-body">
       <PurchasePlan :dtype="1" ref="childPlan" :uploaddata="uploadData" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
       <ProductTable ref="childTable" :status="'edit'" :tablelist="tableList"></ProductTable>
-      <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c"></ProductInput>
+      <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c" :fanweik="fanwei_k"></ProductInput>
       <div class="caozuo">
         <el-button @click="saveCaogao">保存草稿</el-button>
         <el-button @click="sendDraft">审核单据</el-button>
@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       fanwei_c: [],
+      fanwei_k: "",
       wanglaiList: {
         bw_id: 0
       },
@@ -58,6 +59,7 @@ export default {
     wanglaiInfo(value) {
       this.wanglaiList = value;
       this.fanwei_c = value.fanwei.split(",");
+      this.fanwei_k = value.fanwei_c;
     },
     productInfo(value) {
       this.tableList.push(value);
