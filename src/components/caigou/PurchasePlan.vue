@@ -54,11 +54,6 @@
       <el-form-item label="审核人">
         <el-input v-model="userInfo.name"></el-input>
       </el-form-item>
-
-  
-
-
-
       <el-form-item label="摘要">
         <el-input style="width:500px" v-model="uploadData.zhaiyao"></el-input>
       </el-form-item>
@@ -123,7 +118,6 @@ export default {
       this.uploadData.be_id2 = 
       this.uploadData.be_id3 = 
       this.uploadData.be_id4 = user.be_id;
-      console.log(user);
       // this.$axios
       //   .post("/api/user")
       //   .then(res => {
@@ -141,7 +135,6 @@ export default {
       // 个位数补齐十位数
       return s < 10 ? "0" + s : s;
     },
-
     randomNumber() {
       const now = new Date();
       let month = now.getMonth() + 1;
@@ -164,7 +157,22 @@ export default {
     }
   },
   created() {
-    this.uploadData.data = new Date();
+    Date.prototype.Format = function (fmt) { 
+      var o = {
+          "M+": this.getMonth() + 1, //月份 
+          "d+": this.getDate(), //日 
+          "h+": this.getHours(), //小时 
+          "m+": this.getMinutes(), //分 
+          "s+": this.getSeconds(), //秒 
+          "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+          "S": this.getMilliseconds() //毫秒 
+      };
+      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+      for (var k in o)
+      if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+      return fmt;
+    }
+    this.uploadData.date = new Date().Format("yyyy-MM-dd");
     this.uploadData.danhao = this.randomNumber();
     this.getUserInfo();
   }

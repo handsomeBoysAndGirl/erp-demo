@@ -8,5 +8,9 @@ export const apiLogin = data => post("/api/login",data);
 export const wanglai = data => get("/api/wanglai",data);
 
 
-//获取往来单位
+//获取产品
 export const produit = data => get("/api/produit",data);
+
+/*草稿*/
+//添加草稿
+export const addCaogao = data => post("/api/caogao/add",data);
