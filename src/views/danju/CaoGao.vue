@@ -9,6 +9,7 @@
 <script>
 import Search from "@/components/caigou/Search";
 import DanjuTable from "@/components/danju/danjuTable";
+import {getCaogao} from "@/utils/api";
 export default {
   name: "caogao",
   components: {
@@ -24,11 +25,10 @@ export default {
   },
   methods: {
     getDanjuList() {
-      this.$axios
-        .post("/api/danjuIndex")
+        getCaogao()
         .then(res => {
-          this.danjuList = res.data;
           console.log(res);
+          this.danjuList = res.caogao
         })
         .catch(err => {
           console.log(err);

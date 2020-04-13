@@ -71,19 +71,14 @@ export default {
       // console.log(this.$refs.childTable.sumPrices);
     },
     saveCaogao() { //保存草稿
-      // console.log(this.$refs.childPlan.uploadData);
-      // console.log(this.$refs.childTable.tableData);
-      // console.log(this.$refs.childTable.sumPrices);
       let danju_caogao = this.$refs.childPlan.uploadData;
       danju_caogao.list = JSON.stringify(this.$refs.childTable.tableData);
       danju_caogao.heji = this.$refs.childTable.sumPrices[9];
-      console.log(danju_caogao);
       addCaogao({ danju_cao: JSON.stringify(danju_caogao)})
         .then(res => {
           res.wanglaiInfo.forEach(item => {
             item.value = `${item.name}  ${item.suoxie}`;
           });
-          cb(res.wanglaiInfo);
         })
         .catch(err => {
           console.log(err);

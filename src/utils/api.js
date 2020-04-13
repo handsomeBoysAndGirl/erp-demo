@@ -16,3 +16,5 @@ export const produit = data => get("/api/produit",data);
 export const addCaogao = data => post("/api/caogao/add",data);
 //获取草稿
 export const getCaogao = data => get("/api/caogao/list",data);
+//获取草稿详情
+export const getCaogaoDetail = data => get("/api/caogao/detail",data);
