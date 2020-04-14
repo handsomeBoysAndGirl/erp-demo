@@ -46,7 +46,8 @@ export default {
       this.$router.push({
         path: "/fillIn",
         query: {
-          di_id: value.di_id
+          dc_id: value.dc_id,
+          type: 'caogao'
         }
       });
       console.log(value);

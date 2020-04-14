@@ -36,17 +36,17 @@
           <el-input
             type="number"
             @keyup.alt.delete.native="deleteRow(scope.$index, tableData)"
-            v-model="scope.row.price"
+            v-model="scope.row.jiage"
           ></el-input>
         </div>
         <div v-else>
-          <span>{{scope.row.price}}</span>
+          <span>{{scope.row.jiage}}</span>
         </div>
       </template>
     </el-table-column>
-    <el-table-column prop="heji" label="合计" width="100">
+    <el-table-column prop="jine" label="合计" width="100">
       <template slot-scope="scope">
-        <span>{{ multiplication(parseFloat(scope.row.price) , parseFloat(scope.row.shuliang))}}</span>
+        <span>{{ String(multiplication(parseFloat(scope.row.jiage) , parseFloat(scope.row.shuliang))).replace(reg, "$1") }}</span>
       </template>
     </el-table-column>
   </el-table>
@@ -67,7 +67,8 @@ export default {
   data() {
     return {
       tableData: [],
-      sumPrices: []
+      sumPrices: [],
+      reg: /^(.*\..{4}).*$/
     };
   },
   watch: {
@@ -101,9 +102,9 @@ export default {
           sums[index] = "总价";
           return;
         }
-        if (column.property === "heji") {
+        if (column.property === "jine") {
           values = data.map(item =>
-            Number(this_.multiplication(item.shuliang, item.price))
+            Number(this_.multiplication(item.shuliang, item.jiage))
           );
         }
         if (index === 9) {

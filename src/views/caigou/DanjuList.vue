@@ -9,6 +9,7 @@
 <script>
 import DanjuTable from "@/components/danju/danjuTable";
 import Search from "@/components/caigou/Search";
+import {getDanju} from "@/utils/api"
 export default {
   name: "danju",
   components: {
@@ -24,15 +25,14 @@ export default {
   },
   methods: {
     getDanjuList() {
-      this.$axios
-        .post("/api/danjuIndex")
-        .then(res => {
-          this.danjuList = res.data;
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      getDanju({type:1})
+      .then(res => {
+        console.log(res)
+        this.danjuList = res.danjuIndex;
+      })
+      .catch(res => {
+        console.log(res)
+      })
     },
     search(value) {
       this.searchInfo = value;

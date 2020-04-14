@@ -11,6 +11,7 @@
           placeholder="请输入内容"
           :trigger-on-focus="false"
           @select="handleSelect"
+          :disabled="!canEdit"
         >
           <template slot-scope="{ item }">
             <div class="name">{{ item.value }}</div>
@@ -44,7 +45,7 @@
       </el-form-item>
       <br>
       <el-form-item label="经手人">
-        <el-input v-model="userInfo.name"></el-input>
+        <el-input disabled="disabled" v-model="userInfo.name"></el-input>
       </el-form-item>
 
       <el-form-item label="制单人">
@@ -52,13 +53,13 @@
       </el-form-item>
 
       <el-form-item label="审核人">
-        <el-input v-model="userInfo.name"></el-input>
+        <el-input disabled="disabled" v-model="userInfo.name"></el-input>
       </el-form-item>
       <el-form-item label="摘要">
-        <el-input style="width:500px" v-model="uploadData.zhaiyao"></el-input>
+        <el-input :disabled="!canEdit" style="width:500px" v-model="uploadData.zhaiyao"></el-input>
       </el-form-item>
       <el-form-item label="备注">
-        <el-input style="width:500px" v-model="uploadData.beizhu"></el-input>
+        <el-input :disabled="!canEdit" style="width:500px" v-model="uploadData.beizhu"></el-input>
       </el-form-item>
     </el-form>
   </section>
@@ -76,6 +77,10 @@ export default {
     uploaddata: {
       type: Object,
       default: {}
+    },
+    canEdit: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -85,7 +90,7 @@ export default {
     };
   },
   watch: {
-    uploaddata(val) {
+    uploadData(val) {
       console.log(val, "**************12313********");
       this.uploadData = val;
     },

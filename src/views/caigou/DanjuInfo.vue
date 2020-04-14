@@ -6,10 +6,10 @@
       <el-tag size="mini">审核中</el-tag>
     </div>
     <div class="fillIn-body">
-      <PurchasePlan :uploaddata="danjuList" :type="1" ref="childPlan" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
+      <PurchasePlan :uploaddata="danjuList" :type="1" :canEdit="false" ref="childPlan" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
       <ProductTable ref="childTable" :status="'123'" :tablelist="tableList"></ProductTable>
       <div class="caozuo">
-        <el-button @click="sendDraft">退出</el-button>
+        <el-button @click="back">退出</el-button>
       </div>
     </div>
     <div class="fillIn-footer">
@@ -21,6 +21,7 @@
 <script>
 import PurchasePlan from "@/components/caigou/PurchasePlan";
 import ProductTable from "@/components/caigou/ProductTable";
+import {getDanjuDetail} from "@/utils/api"
 export default {
   name: "fillIn",
   components: {
@@ -47,24 +48,19 @@ export default {
       console.log(this.$refs.childTable.sumPrices);
     },
     getdanjuInfo(di_id) {
-      this.$axios
-        .post("/api/danjuIndex")
-        .then(res => {
-          this.danjuList = res.data[parseInt(di_id) - 1];
-          console.log(this.danjuList);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      this.$axios
-        .post("/api/danjuList")
-        .then(res => {
-          console.log(res.data);
-          this.tableList = res.data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      getDanjuDetail({di_id: di_id})
+      .then(res => {
+        console.log(res)
+        this.danjuList = res.danjuIndex;
+        this.tableList = res.danjulist;
+      })
+      .catch(res => {
+        console.log(res)
+      })
+     
+    },
+    back() {
+      this.$router.push(`/danju`);
     }
   },
   created() {

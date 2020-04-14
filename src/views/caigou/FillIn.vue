@@ -25,7 +25,7 @@
 import PurchasePlan from "@/components/caigou/PurchasePlan";
 import ProductTable from "@/components/caigou/ProductTable";
 import ProductInput from "@/components/caigou/ProductInput";
-import {addCaogao} from "@/utils/api";
+import {addCaogao,getCaogaoDetail} from "@/utils/api";
 export default {
   name: "fillIn",
   components: {
@@ -48,7 +48,6 @@ export default {
         be_id2: "", //制单人
         be_id3: "", //审核人
         be_id4: "", //产品经理
-        type: 1, //单据类型
         date: "", //单据日期
         danhao: "", //单号
         beizhu: "",
@@ -72,8 +71,9 @@ export default {
     },
     saveCaogao() { //保存草稿
       let danju_caogao = this.$refs.childPlan.uploadData;
+      danju_caogao.type = 1;
       danju_caogao.list = JSON.stringify(this.$refs.childTable.tableData);
-      danju_caogao.heji = this.$refs.childTable.sumPrices[9];
+      danju_caogao.heji_pre = this.$refs.childTable.sumPrices[9];
       addCaogao({ danju_cao: JSON.stringify(danju_caogao)})
         .then(res => {
           res.wanglaiInfo.forEach(item => {
@@ -83,15 +83,33 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    getCaogaoDet(dc_id) {
+      console.log()
+      getCaogaoDetail({dc_id: dc_id})
+      .then(res => {
+        console.log(res)
+        if (res.status == "success") {
+          this.tableList = res.caogao.list
+          delete res.caogao.list
+          this.uploadData = res.caogao
+          this.wanglaiList.bw_id = this.uploadData.bw_id
+        }
+      })
+      .catch(res => {
+        console.log(res)
+      })
     }
   },
   created() {
-    if (this.$route.query.di_id) {
-      console.log(123);
-      //uploadData
-      //tableList
+    if (this.$route.query.type == "caogao") {
+      this.getCaogaoDet(this.$route.query.dc_id);
     } else {
-      console.log("no");
+      if (this.$route.query.di_id) {
+        console.log(123);
+        //uploadData
+        //tableList
+      }
     }
   }
 };
