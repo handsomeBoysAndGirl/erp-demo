@@ -50,6 +50,29 @@
         <el-input v-model="userInfo.name"></el-input>
       </el-form-item>
 
+
+       <el-form-item label="配送方式" v-if="dtype == 2">
+          <el-select v-model="psType" clearable placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+      </el-form-item>
+      
+
+       <el-form-item label="销售方式" v-if="dtype == 2">
+          <el-select v-model="psType" clearable placeholder="请选择">
+            <el-option
+              v-for="item in saleType"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+      </el-form-item>
   
 
 
@@ -80,6 +103,10 @@ export default {
   },
   data() {
     return {
+      isFp:false,
+      psType:2,
+      options:[{label:"自提",value:1},{label:"公司配送",value:2}],
+      saleType:[{label:"有票销售",value:1},{label:"无票销售",value:2}],
       uploadData: {},
       userInfo: {},
       allowfw:{},

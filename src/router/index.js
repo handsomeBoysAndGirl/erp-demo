@@ -82,6 +82,33 @@ const routes = [
           icon: 'dashboard',
           noCache: true
         }
+      },{
+        path: "/fapiao",
+        name: "fapiao",
+        component: () => import('../views/fapiao/fapiao.vue'),
+        meta: {
+          title: '发票中心',
+          icon: 'dashboard',
+          noCache: true
+        }
+      },{
+        path: "/newfapiao/",
+        name: "newfapiao",
+        component: () => import('../views/fapiao/newfapiao.vue'),
+        meta: {
+          title: '新开发票',
+          icon: 'dashboard',
+          noCache: true
+        }
+      },{
+        path: '/money',
+        name: 'money',
+        component: () => import( '../views/money/main.vue'),
+        meta: {
+          title: '虚拟钱包',
+          icon: 'dashboard',
+          noCache: true
+        }
       },
     ]
   },
