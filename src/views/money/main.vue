@@ -122,6 +122,7 @@
             console.log(row);
           },
           recharge(type){
+            console.log(12222222)
             let msg = type == 1 ?"请输入充值金额数":"请输入提现金额数"
             this.$prompt(msg, '提示', {
           confirmButtonText: '确定',
