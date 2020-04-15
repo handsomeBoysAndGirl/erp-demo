@@ -8,7 +8,7 @@ import  './mock/caigou'
 
 //saleMock  start
  import "./mock/sale"
-
+ import "./mock/fp"
 
 Vue.prototype.$axios = axios
 
