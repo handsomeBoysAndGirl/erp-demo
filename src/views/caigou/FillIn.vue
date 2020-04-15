@@ -76,24 +76,27 @@ export default {
       danju_caogao.heji_pre = this.$refs.childTable.sumPrices[9];
       addCaogao({ danju_cao: JSON.stringify(danju_caogao)})
         .then(res => {
-          res.wanglaiInfo.forEach(item => {
-            item.value = `${item.name}  ${item.suoxie}`;
-          });
+          if(res.status == "success") {
+            this.$router.push('/caogao');
+            this.$message({
+              type: res.status,
+              message: res.message
+            })
+          }
         })
         .catch(err => {
           console.log(err);
         });
     },
     getCaogaoDet(dc_id) {
-      console.log()
       getCaogaoDetail({dc_id: dc_id})
       .then(res => {
-        console.log(res)
         if (res.status == "success") {
-          this.tableList = res.caogao.list
-          delete res.caogao.list
-          this.uploadData = res.caogao
-          this.wanglaiList.bw_id = this.uploadData.bw_id
+          this.tableList = res.caogao.list;
+          delete res.caogao.list;
+          this.uploadData = res.caogao;
+          console.log(this.uploadData);
+          this.wanglaiList.bw_id = this.uploadData.bw_id;
         }
       })
       .catch(res => {

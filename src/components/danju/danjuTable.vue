@@ -17,7 +17,7 @@
       <el-table-column prop="typeInfo" label="单据类型"></el-table-column>
       <el-table-column label="往来">
         <template slot-scope="scope">
-          <span>{{scope.row.wanglaiName}}</span>
+          <span>{{scope.row.wanglai}}</span>
       &nbsp;
           <el-tag v-if="scope.row.zhaiyao != ''">{{scope.row.zhaiyao}}</el-tag>
      &nbsp;

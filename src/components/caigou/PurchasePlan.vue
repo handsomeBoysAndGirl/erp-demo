@@ -90,9 +90,11 @@ export default {
     };
   },
   watch: {
-    uploadData(val) {
-      console.log(val, "**************12313********");
+    uploaddata(val) {
       this.uploadData = val;
+      this.querySearch(val.wanglai,(wanglaiData) => {
+        this.$emit("wanglaiInfo", wanglaiData.find((item) => val.bw_id == item.bw_id));
+      });
     },
     dtype(val) {
       console.log(val);

@@ -35,6 +35,7 @@
         <div v-if="status === 'edit'">
           <el-input
             type="number"
+            min="0"
             @keyup.alt.delete.native="deleteRow(scope.$index, tableData)"
             v-model="scope.row.jiage"
           ></el-input>
