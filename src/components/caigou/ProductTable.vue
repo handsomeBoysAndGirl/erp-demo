@@ -79,6 +79,7 @@ export default {
   },
   methods: {
     hasSelectedRow(row){
+      console.log(12312312)
         this.$emit('hasSelectedRows',row)
     },
     //求余精度处理
