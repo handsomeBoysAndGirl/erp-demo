@@ -12,6 +12,7 @@
           
           :trigger-on-focus="false"
           @select="handleSelect"
+          :disabled="!canEdit"
         >
           <template slot-scope="{ item }">
             <div class="name">{{ item.value }}</div>
@@ -39,7 +40,7 @@
       </el-form-item>
       <br>
       <el-form-item label="经手人">
-        <el-input v-model="userInfo.name"></el-input>
+        <el-input disabled="disabled" v-model="userInfo.name"></el-input>
       </el-form-item>
 
       <el-form-item label="制单人">
@@ -47,7 +48,7 @@
       </el-form-item>
 
       <el-form-item label="审核人">
-        <el-input v-model="userInfo.name"></el-input>
+        <el-input disabled="disabled" v-model="userInfo.name"></el-input>
       </el-form-item>
 
 
@@ -78,10 +79,10 @@
 
 
       <el-form-item label="摘要">
-        <el-input style="width:500px" v-model="uploadData.zhaiyao"></el-input>
+        <el-input :disabled="!canEdit" style="width:500px" v-model="uploadData.zhaiyao"></el-input>
       </el-form-item>
       <el-form-item label="备注">
-        <el-input style="width:500px" v-model="uploadData.beizhu"></el-input>
+        <el-input :disabled="!canEdit" style="width:500px" v-model="uploadData.beizhu"></el-input>
       </el-form-item>
     </el-form>
   </section>
@@ -99,6 +100,10 @@ export default {
     uploaddata: {
       type: Object,
       default: {}
+    },
+    canEdit: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -116,7 +121,9 @@ export default {
   watch: {
     uploaddata(val) {
       this.uploadData = val;
-      console.log(val,"999999999999999999999999")
+      this.querySearch(val.wanglai,(wanglaiData) => {
+        this.$emit("wanglaiInfo", wanglaiData.find((item) => val.bw_id == item.bw_id));
+      });
     },
     dtype(val) {
       console.log(val);
@@ -124,19 +131,9 @@ export default {
   },
   methods: {
     querySearch(queryString, cb) {
-      console.log(queryString);
-      // this.$axios
-      //   .post("/api/wanglai")
-      //   .then(res => {
-      //     console.log(res)
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
-      wanglai({ dtype: this.dtype,name: this.uploadData.wanglai })
+      wanglai({ dtype: this.dtype,name: queryString })
         .then(res => {
           res.wanglaiInfo.forEach(item => {
-            console.log(item);
             item.value = `${item.name}  ${item.suoxie}`;
           });
           cb(res.wanglaiInfo);
@@ -153,6 +150,12 @@ export default {
       this.uploadData.bw_id = item.bw_id;
     },
     getUserInfo() {
+      let user = JSON.parse(localStorage.getItem('userInfo'));
+      this.userInfo = user;
+      this.uploadData.be_id = 
+      this.uploadData.be_id2 = 
+      this.uploadData.be_id3 = 
+      this.uploadData.be_id4 = user.be_id;
       // this.$axios
       //   .post("/api/user")
       //   .then(res => {
@@ -170,7 +173,6 @@ export default {
       // 个位数补齐十位数
       return s < 10 ? "0" + s : s;
     },
-
     randomNumber() {
       const now = new Date();
       let month = now.getMonth() + 1;
@@ -193,7 +195,22 @@ export default {
     }
   },
   created() {
-    this.uploadData.data = new Date();
+    Date.prototype.Format = function (fmt) { 
+      var o = {
+          "M+": this.getMonth() + 1, //月份 
+          "d+": this.getDate(), //日 
+          "h+": this.getHours(), //小时 
+          "m+": this.getMinutes(), //分 
+          "s+": this.getSeconds(), //秒 
+          "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+          "S": this.getMilliseconds() //毫秒 
+      };
+      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+      for (var k in o)
+      if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+      return fmt;
+    }
+    this.uploadData.date = new Date().Format("yyyy-MM-dd");
     this.uploadData.danhao = this.randomNumber();
     this.getUserInfo();
   }

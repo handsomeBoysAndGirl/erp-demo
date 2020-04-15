@@ -66,22 +66,25 @@ export default {
   methods: {
     onSubmit() {
       apiLogin({
-        name: this.form.name,
-        pass: this.form.pass
+        username: this.form.name,
+        password: this.form.pass
       }).then(res => {
-        console.log(res);
-        if (res.code == 1) {
+        if (res.status == "success") {
           this.afterlogin(res);
+        } else {
+          this.$message({
+            type: "error",
+            message: res.message
+          });
         }
       });
     },
     afterlogin(data) {
-      console.log(data);
       window.localStorage.setItem("token", data.token);
       window.localStorage.setItem("userInfo", JSON.stringify(data.userInfo));
       this.$message({
         type: "success",
-        message: `欢迎您，${data.name}!`,
+        message: `欢迎您，${data.userInfo.name}!`,
         duration: 3000
       });
       this.$router.replace({ path: "/home" });

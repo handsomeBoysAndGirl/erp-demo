@@ -20,6 +20,7 @@
 <script>
 
 import ChoosePro from "@/components/sale/choosePro"
+import { produit } from "@/utils/api"
 export default {
   components: {
     ChoosePro
@@ -37,6 +38,10 @@ export default {
     fanweic: {
       type: Array,
       default: []
+    },
+    fanweik: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -55,14 +60,13 @@ export default {
   },
   methods: {
     querySearch(queryString, cb) {
-      // this.$axios
-      //   .post("/api/product")
-      //   .then(res => {
-      //     cb(res.data);
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
+      produit({ name: queryString, fanweik: this.fanweik })
+        .then(res => {
+          cb(res.produitInfo);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     handleSelect(value) {
       this.product = "";

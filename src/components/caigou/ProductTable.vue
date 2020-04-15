@@ -9,11 +9,11 @@
   >
     <el-table-column type="index" width="50"></el-table-column>
     <el-table-column prop="name" label="品名" width="180"></el-table-column>
-    <el-table-column prop="info" label="产品相关信息" width="180"></el-table-column>
-    <el-table-column prop="pihao" label="批号"></el-table-column>
-    <el-table-column prop="riqi" label="生产日期"></el-table-column>
-    <el-table-column prop="xiaoqi" label="有效期"></el-table-column>
-    <el-table-column label="数量">
+    <el-table-column prop="about" label="产品相关信息"></el-table-column>
+    <el-table-column prop="pihao" label="批号" width="100"></el-table-column>
+    <el-table-column prop="riqi" label="生产日期" width="200"></el-table-column>
+    <el-table-column prop="xiaoqi" label="有效期" width="200"></el-table-column>
+    <el-table-column label="数量" width="100">
       <template slot-scope="scope">
         <div v-if="status === 'edit'">
           <el-input
@@ -30,24 +30,25 @@
         </div>
       </template>
     </el-table-column>
-    <el-table-column prop="danwei" label="单位"></el-table-column>
-    <el-table-column label="单价">
+    <el-table-column prop="danwei" label="单位" width="50"></el-table-column>
+    <el-table-column label="单价" width="100">
       <template slot-scope="scope">
         <div v-if="status === 'edit'">
           <el-input
             type="number"
+            min="0"
             @keyup.alt.delete.native="deleteRow(scope.$index, tableData)"
-            v-model="scope.row.price"
+            v-model="scope.row.jiage"
           ></el-input>
         </div>
         <div v-else>
-          <span>{{scope.row.price}}</span>
+          <span>{{scope.row.jiage}}</span>
         </div>
       </template>
     </el-table-column>
-    <el-table-column prop="heji" label="合计">
+    <el-table-column prop="jine" label="合计" width="100">
       <template slot-scope="scope">
-        <span>{{ multiplication(parseFloat(scope.row.price) , parseFloat(scope.row.shuliang))}}</span>
+        <span>{{ String(multiplication(parseFloat(scope.row.jiage) , parseFloat(scope.row.shuliang))).replace(reg, "$1") }}</span>
       </template>
     </el-table-column>
   </el-table>
@@ -68,7 +69,8 @@ export default {
   data() {
     return {
       tableData: [],
-      sumPrices: []
+      sumPrices: [],
+      reg: /^(.*\..{4}).*$/
     };
   },
   watch: {
@@ -105,9 +107,9 @@ export default {
           sums[index] = "总价";
           return;
         }
-        if (column.property === "heji") {
+        if (column.property === "jine") {
           values = data.map(item =>
-            Number(this_.multiplication(item.shuliang, item.price))
+            Number(this_.multiplication(item.shuliang, item.jiage))
           );
         }
         if (index === 9) {
