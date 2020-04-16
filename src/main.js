@@ -7,7 +7,7 @@ import axios from "./utils/http";
 // import  './mock/caigou'
 
 //saleMock  start
-//  import "./mock/sale"
+  import "./mock/sale"
 
 
 Vue.prototype.$axios = axios
