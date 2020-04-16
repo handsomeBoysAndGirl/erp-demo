@@ -133,6 +133,7 @@ export default {
     querySearch(queryString, cb) {
       wanglai({ dtype: this.dtype,name: queryString })
         .then(res => {
+          console.log(res);
           res.wanglaiInfo.forEach(item => {
             item.value = `${item.name}  ${item.suoxie}`;
           });
@@ -156,18 +157,6 @@ export default {
       this.uploadData.be_id2 = 
       this.uploadData.be_id3 = 
       this.uploadData.be_id4 = user.be_id;
-      // this.$axios
-      //   .post("/api/user")
-      //   .then(res => {
-      //     this.uploadData.be_id = res.data.be_id;
-      //     this.uploadData.be_id2 = res.data.be_id;
-      //     this.uploadData.be_id3 = res.data.be_id;
-      //     this.uploadData.be_id4 = res.data.be_id;
-      //     this.userInfo = res.data;
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
     },
     setTimeDateFmt(s) {
       // 个位数补齐十位数

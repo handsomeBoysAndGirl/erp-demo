@@ -136,7 +136,7 @@ export default {
   methods: {
     pickerOptions() {},
     querySearch(queryString, cb) {
-      wanglai({ type: this.dtype })
+      wanglai({ type: this.dtype,name: queryString })
         .then(res => {
           res.forEach(item => {
             item.value = `${item.name}  ${item.suoxie}`;

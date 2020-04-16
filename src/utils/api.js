@@ -4,10 +4,10 @@ import {post,get} from './http'
 export const apiLogin = data => post("/api/login",data);
 
 //获取往来单位
-export const wanglai = data => post("/api/wanglai",data);
+export const wanglai = data => get("/api/wanglai",data);
 
 //获取销售的具体药品
-export const getskuall = data =>post("/api/allsku",data);
+export const getskuall = data =>get("/api/allsku",data);
 
 
 //发票部分
