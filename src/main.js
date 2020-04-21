@@ -9,8 +9,6 @@ import axios from "./utils/http";
 //saleMock  start
   import "./mock/sale"
 
-
-
  //common function JS
  import tools from "./utils/tools"
  Vue.prototype.$tools = tools;
