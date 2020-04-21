@@ -18,10 +18,8 @@ export const allFapiao = data => post("/api/getallfp");
 export const getAllSale = data =>get("/api/getallsale");
 
 //获取相关往来单位含未开发票产品的单据列表
-export const getFpList = data =>get("/api/getfplist");
+export const getFpList = data =>get("/api/getfplist",data);
 
-//根据单据获取该单据具体产品
-export const getDetailPro = data => get("/api/getDetailpro")
 
 //申请发票内勤处理
 export const dealFp = data => post("/api/dealFp");

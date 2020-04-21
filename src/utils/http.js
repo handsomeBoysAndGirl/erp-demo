@@ -109,7 +109,6 @@ export function get(url, params) {
 
     const token =  "123"               //window.localStorage.getItem("token");
     axios.defaults.headers.common['token'] = token;
-
     return new Promise((resolve, reject) => {
         axios.get(url, {
             params:params

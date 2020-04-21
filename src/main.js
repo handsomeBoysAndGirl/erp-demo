@@ -4,14 +4,19 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import router from './router'
 import axios from "./utils/http";
+import Mock from 'mockjs'
 import  './mock/caigou'
 
 //saleMock  start
  import "./mock/sale"
  import "./mock/fp"
 
-Vue.prototype.$axios = axios
 
+ //common function JS
+ import tools from "./utils/tools"
+ Vue.prototype.$tools = tools;
+
+Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)

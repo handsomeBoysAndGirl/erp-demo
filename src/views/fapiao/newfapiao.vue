@@ -32,7 +32,8 @@
           <div class="code">
             <span class="demonstration">编号</span>
             <el-date-picker
-              v-model="value2"
+              :disabled="bwid == ''"
+              v-model="nowtimeLine"
               class="picker_filter"
               size="mini"
               type="daterange"
@@ -41,39 +42,18 @@
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              :picker-options="pickerOptions"
             ></el-date-picker>
           </div>
 
-          <div class="codelist" style="margin-top:15px">
-            <el-checkbox
-              v-model="checked"
-              style="color:#85c5f3"
-              v-for="o in 12"
-              :key="o"
-            >XS20190604000009</el-checkbox>
+          <div class="codelist" style="margin-top:15px;display:flex;flex-direction:column;justify-content:left">
+            <div  v-for="item in danhao" :key="item.di_id" @click="checkedChange(item)">
+              <el-link type="primary" style="margin-bottom:20px" >{{item.name}}</el-link>
+              <el-link disabled icon='date' style="margin-bottom:20px;margin-left:10px" >{{item.date}}</el-link>
+            </div>  
           </div>
         </el-aside>
         <el-main>
-          <el-table
-            ref="multipleTable"
-            :data="tableData"
-            tooltip-effect="dark"
-            style="width: 100%"
-            @selection-change="handleSelectionChange"
-          >
-            <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column type="index" label="#" width="120"></el-table-column>
-            <el-table-column prop="name" label="产品" width="120"></el-table-column>
-            <el-table-column prop="address" label="规格" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="address" label="gsp" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="address" label="税率" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="address" label="数量" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="address" label="单位" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="address" label="单价" show-overflow-tooltip></el-table-column>
-            <el-table-column prop="address" label="金额" show-overflow-tooltip></el-table-column>
-          </el-table>
-
+         <FpList :tableData ="tableDatas" @ChildrenChange='changeDetailVal'  />
           <el-row>
             <el-button type="primary" style="float:right;margin-top:20px;" plain>提交申请</el-button>
             <h2 style="float:right;margin-top:35px;margin-right:40px;">共计 ￥ 125325.00元</h2>
@@ -85,61 +65,59 @@
 </template>
 
 <script>
-import { wanglai } from "@/utils/api";
+import {wanglai,getFpList} from "@/utils/api";
+import FpList from '@/components/danju/fapiaoList'
 export default {
+  components:{
+    FpList
+  },
   data() {
     return {
       search: {
         name: ""
       },
-      value2: "",
-      checked: true,
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-08",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-06",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-07",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ]
+      bwid:'',
+      nowtimeLine:'',
+      startTime:'',
+      endtTime:'',
+      checkList:[],
+      danhao:[],
+      allDetailList:[],
+      tableDatas: {}
     };
   },
+  watch:{
+     nowtimeLine(val){
+       if(val != null){
+          this.startTime =   this.$tools.formatDate(this.nowtimeLine[0],this);
+          this.endtTime =   this.$tools.formatDate(this.nowtimeLine[0],this);
+          this.searchfp();
+       }
+     },
+     names(val){
+       if(val === '')this.bwid='' ;
+     }
+  },
+  mounted(){
+    this.$tools.FinanceDeal(3.141592654);
+  },
   methods: {
-    pickerOptions() {},
+    //子组件值改变
+    changeDetailVal(val){
+        this.danhao.forEach((item,key)=>{
+          if(val.name == item.name){
+            this.danhao[key].list = val.list
+        }})
+    },
+    checkedChange(val){
+       this.tableDatas = val
+    },
     querySearch(queryString, cb) {
+      this.bwid='';
       wanglai({ type: this.dtype })
         .then(res => {
           res.forEach(item => {
-            item.value = `${item.name}  ${item.suoxie}`;
+            item.value = `${item.name}-${item.suoxie}`;
           });
           cb(res);
         })
@@ -148,9 +126,42 @@ export default {
         });
     },
     handleSelect(item) {
-      console.log(item, "****");
+      this.bwid = item.bw_id
+      this.searchfp();
     },
-    handleSelectionChange() {}
+    searchfp(){
+      if(this.bw_id !=''){
+        getFpList({'bw_id':this.bwid,'startTime':`${this.startTime}`,'endTime':`${this.endtTime}`}).then(res=>{
+          this.danhao = res.map(item=>{
+               return {
+                 'di_id':item.di_id,
+                 'name':item.danhao,
+                 'list':item.list,
+                 'date':item.date
+               }
+             })
+            this.danhao =this.addChecked(this.danhao);
+        })
+      }else{
+        this.$message({
+          message: '警告:请先选择往来单位',
+          type: 'warning'
+        });
+      }
+    },
+    addChecked(arr){
+      arr.forEach((e,k)=>{
+          e.list.forEach(item=>{
+            item['checked'] = false
+        })
+      });
+      return arr;
+    }
+  },
+  computed:{
+    names(){
+      return this.search.name
+    }
   }
 };
 </script>
