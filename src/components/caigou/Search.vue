@@ -2,7 +2,7 @@
   <!-- 采购计划单 -->
   <section>
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
-      <el-form-item :label="dtype == 1 ? '供应商' : '客户'">
+      <el-form-item :label="dtype == 2 ? '供应商' : '客户'">
         <el-autocomplete
           class="inline-input"
           v-model="formInline.wanglai"
@@ -24,6 +24,7 @@
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
         ></el-date-picker>
       </el-form-item>
 
@@ -47,12 +48,26 @@
 </template>
 
 <script>
+import { wanglai } from "@/utils/api";
 export default {
   name: "search",
   props: {
     dtype: {
       type: Number,
       default: 0
+    }
+  },
+  computed:{
+    wanglaiName(){
+      return this.formInline.wanglai;
+    }
+  },
+  watch:{
+    wanglaiName(val) {
+      if (val == "") {
+        console.log("yonghukong ")
+        this.uploadData.bw_id = ""
+      }
     }
   },
   data() {
@@ -74,10 +89,13 @@ export default {
   },
   methods: {
     querySearch(queryString, cb) {
-      this.$axios
-        .post("/api/wanglai")
+      wanglai({ dtype: this.dtype,name: queryString })
         .then(res => {
-          cb(res.data);
+          console.log(res);
+          res.wanglaiInfo.forEach(item => {
+            item.value = `${item.name}  ${item.suoxie}`;
+          });
+          cb(res.wanglaiInfo);
         })
         .catch(err => {
           console.log(err);
