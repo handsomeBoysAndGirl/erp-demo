@@ -10,8 +10,12 @@ import axios from "./utils/http";
   import "./mock/sale"
 
 
-Vue.prototype.$axios = axios
 
+ //common function JS
+ import tools from "./utils/tools"
+ Vue.prototype.$tools = tools;
+
+Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)

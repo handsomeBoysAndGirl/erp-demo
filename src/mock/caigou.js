@@ -244,7 +244,6 @@ Mock.mock(`${Domain}/api/wanglai`, 'post', opts=>{
     let pramas = JSON.parse(`${opts.body}`)
     let arrs = [];
     pramas.type == 1? arrs = wanglai:arrs=kehu
-    console.log(arrs,"***************")
     return arrs;
 })
 Mock.mock('/api/product', 'post', product)
