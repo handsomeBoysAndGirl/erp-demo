@@ -71,8 +71,7 @@ export default {
     handleSelect(value) {
       this.product = "";
       if(this.dtype == 2){
-            this.$refs.choosepro.switchPro(value.bp_id,value.name,this.bwid)
-
+            this.$refs.choosepro.switchPro(value.bp_id,value.name,this.bwid,this.fanweic)
       }else{
         this.$emit("productInfo", value);
       }

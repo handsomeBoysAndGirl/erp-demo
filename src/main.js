@@ -4,10 +4,13 @@ import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import router from './router'
 import axios from "./utils/http";
+// import Mock from 'mockjs'
 // import  './mock/caigou'
 
 //saleMock  start
-  import "./mock/sale"
+//  import "./mock/sale"
+//  import "./mock/fp"
+
 
  //common function JS
  import tools from "./utils/tools"

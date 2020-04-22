@@ -20,6 +20,7 @@
             @keyup.alt.delete.native="deleteRow(scope.$index, tableData)"
             type="number"
             min="0"
+            @blur="checkNum(scope.row.shuliang,scope.row.maxshuliang,scope.$index)"
             :class="numbersequal(scope.row.shuliang,scope.row.step)? '':'error'"
             :step="scope.row.step"
             v-model="scope.row.shuliang"
@@ -80,6 +81,12 @@ export default {
     }
   },
   methods: {
+    //检查数量
+    checkNum(val,max,index){
+       if(val>max){
+         this.tableData[index].shuliang = max
+       }
+    },
     hasSelectedRow(row){
       console.log(12312312)
         this.$emit('hasSelectedRows',row)

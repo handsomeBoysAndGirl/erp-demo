@@ -71,25 +71,23 @@ export default {
       uploadData: {
         wanglai: "",
         bw_id: "", //往来抬头
-        be_id: "", //经手人
-        be_id2: "", //制单人
-        be_id3: "", //审核人
         be_id4: "", //产品经理
-        type: 1, //单据类型
+        type: 2, //单据类型
         date: "", //单据日期
-        danhao: "", //单号
         beizhu: "",
-        zhaiyao: ""
+        zhaiyao: "",
+        psType:1,
+        saleType:1
       }
     };
   },
   methods: {
     deleRows(index){
       this.tableList.splice(index, 1);
-      console.log(this.tableList,"*****************")
+      console.log(this.tableList)
     },
     hasSelectedRow(val){
-      console.log(val,"88888888")
+      console.log(val)
         this.proinfos = val
     },
     wanglaiInfo(value) {

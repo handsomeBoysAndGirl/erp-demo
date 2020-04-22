@@ -51,7 +51,7 @@ export default {
       default: []
     }
   },
-  methods: {
+  methods:{
     handleClick(row) {
       this.$emit("showInfo", row);
       console.log(row);

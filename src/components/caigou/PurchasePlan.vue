@@ -14,13 +14,10 @@
           @select="handleSelect"
           :disabled="!canEdit"
         >
-          <template slot-scope="{ item }">
+        <template slot-scope="{ item }">
             <div class="name">{{ item.value }}</div>
           </template>
         </el-autocomplete>
-      </el-form-item>
-            <el-form-item label="单据编号">
-        <el-input disabled v-model="uploadData.danhao"></el-input>
       </el-form-item>
           <el-form-item label="单据日期">
         <el-date-picker
@@ -29,6 +26,35 @@
           type="date"
           placeholder="选择日期"
         ></el-date-picker>
+      </el-form-item>
+
+      <el-form-item label="摘要">
+        <el-input style="width:500px" v-model="uploadData.zhaiyao"></el-input>
+      </el-form-item>
+      <el-form-item label="备注">
+        <el-input style="width:500px" v-model="uploadData.beizhu"></el-input>
+      </el-form-item>
+
+       <el-form-item label="销售方式" v-if="dtype == 2">
+          <el-select v-model="uploadData.saleType" clearable placeholder="请选择">
+            <el-option
+              v-for="item in saleTypes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+      </el-form-item>
+      
+      <el-form-item label="配送方式" v-if="dtype == 2">
+          <el-select v-model="uploadData.psType" clearable placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
       </el-form-item>
       <br>
       <el-form-item label="销售范围" v-show="uploadData.wanglai != null && uploadData.wanglai.length>0">
@@ -39,51 +65,7 @@
         <el-tag type="danger" v-for="(item,index) in banfw" :key='index'>{{item}}</el-tag>
       </el-form-item>
       <br>
-      <el-form-item label="经手人">
-        <el-input disabled="disabled" v-model="userInfo.name"></el-input>
-      </el-form-item>
 
-      <el-form-item label="制单人">
-        <el-input disabled="disabled" v-model="userInfo.name"></el-input>
-      </el-form-item>
-
-      <el-form-item label="审核人">
-        <el-input disabled="disabled" v-model="userInfo.name"></el-input>
-      </el-form-item>
-
-
-       <el-form-item label="配送方式" v-if="dtype == 2">
-          <el-select v-model="psType" clearable placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-      </el-form-item>
-      
-
-       <el-form-item label="销售方式" v-if="dtype == 2">
-          <el-select v-model="psType" clearable placeholder="请选择">
-            <el-option
-              v-for="item in saleType"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-      </el-form-item>
-  
-
-
-
-      <el-form-item label="摘要">
-        <el-input :disabled="!canEdit" style="width:500px" v-model="uploadData.zhaiyao"></el-input>
-      </el-form-item>
-      <el-form-item label="备注">
-        <el-input :disabled="!canEdit" style="width:500px" v-model="uploadData.beizhu"></el-input>
-      </el-form-item>
     </el-form>
   </section>
 </template>
@@ -111,7 +93,7 @@ export default {
       isFp:false,
       psType:2,
       options:[{label:"自提",value:1},{label:"公司配送",value:2}],
-      saleType:[{label:"有票销售",value:1},{label:"无票销售",value:2}],
+      saleTypes:[{label:"有票销售",value:1},{label:"无票销售",value:2}],
       uploadData: {},
       userInfo: {},
       allowfw:{},
@@ -125,13 +107,16 @@ export default {
         this.$emit("wanglaiInfo", wanglaiData.find((item) => val.bw_id == item.bw_id));
       });
     },
-    dtype(val) {
+    uploadData(val){
+        console.log(val)
+    },
+    dtype(val){
       console.log(val);
     }
   },
   methods: {
-    querySearch(queryString, cb) {
-      wanglai({ dtype: this.dtype,name: queryString })
+    querySearch(queryString, cb){
+      wanglai({ type: this.dtype })
         .then(res => {
           res.wanglaiInfo.forEach(item => {
             item.value = `${item.name}  ${item.suoxie}`;
@@ -143,25 +128,15 @@ export default {
         });
     },
     handleSelect(item) {
-      console.log(item);
-      this.$emit("wanglaiInfo", item);
+      this.$emit("wanglaiInfo",item);
       this.allowfw = item.fw;
       this.banfw = item.fwc;
       this.uploadData.bw_id = item.bw_id;
     },
     getUserInfo() {
-      let user = JSON.parse(localStorage.getItem('userInfo'));
-      this.userInfo = user;
-      this.uploadData.be_id = 
-      this.uploadData.be_id2 = 
-      this.uploadData.be_id3 = 
-      this.uploadData.be_id4 = user.be_id;
       // this.$axios
       //   .post("/api/user")
       //   .then(res => {
-      //     this.uploadData.be_id = res.data.be_id;
-      //     this.uploadData.be_id2 = res.data.be_id;
-      //     this.uploadData.be_id3 = res.data.be_id;
       //     this.uploadData.be_id4 = res.data.be_id;
       //     this.userInfo = res.data;
       //   })
@@ -195,22 +170,7 @@ export default {
     }
   },
   created() {
-    Date.prototype.Format = function (fmt) { 
-      var o = {
-          "M+": this.getMonth() + 1, //月份 
-          "d+": this.getDate(), //日 
-          "h+": this.getHours(), //小时 
-          "m+": this.getMinutes(), //分 
-          "s+": this.getSeconds(), //秒 
-          "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-          "S": this.getMilliseconds() //毫秒 
-      };
-      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-      for (var k in o)
-      if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-      return fmt;
-    }
-    this.uploadData.date = new Date().Format("yyyy-MM-dd");
+    this.uploadData.date =this.$tools.formatDate(new Date(),this);
     this.uploadData.danhao = this.randomNumber();
     this.getUserInfo();
   }

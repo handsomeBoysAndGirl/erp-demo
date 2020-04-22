@@ -42,7 +42,7 @@ export default {
       this.wanglaiList = value;
       this.fanwei_c = value.fanwei_c.split(",");
     },
-    sendDraft() {
+    sendDraft(type) {
       console.log(this.$refs.childPlan.uploadData);
       console.log(this.$refs.childTable.tableData);
       console.log(this.$refs.childTable.sumPrices);

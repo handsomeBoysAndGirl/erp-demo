@@ -14,7 +14,7 @@ import qs from 'qs'
 //创建axios的实例
 const service = axios.create({
 });
-//axios.defaults.baseURL = 'http://192.168.2.236:5000';
+//axios.defaults.baseURL = 'http://localhost:8089';
 axios.defaults.baseURL = 'http://192.168.2.236:5000';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
