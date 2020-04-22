@@ -113,8 +113,7 @@ export default {
        this.tableDatas = val
     },
     querySearch(queryString, cb) {
-      this.bwid='';
-      wanglai({ type: this.dtype })
+      wanglai({ type: this.dtype,name: queryString })
         .then(res => {
           res.forEach(item => {
             item.value = `${item.name}-${item.suoxie}`;

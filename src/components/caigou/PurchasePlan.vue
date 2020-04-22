@@ -2,7 +2,7 @@
   <!-- 采购计划单 -->
   <section>
     <el-form :inline="true" :model="uploadData" class="demo-form-inline">
-      <el-form-item :label="dtype == 1 ? '供应商' : '客户'">
+      <el-form-item :label="dtype == 2 ? '供应商' : '客户'">
         <el-autocomplete
           class="inline-input"
           v-model="uploadData.wanglai"
@@ -35,7 +35,7 @@
         <el-input style="width:500px" v-model="uploadData.beizhu"></el-input>
       </el-form-item>
 
-       <el-form-item label="销售方式" v-if="dtype == 2">
+       <el-form-item label="销售方式" v-if="dtype == 8">
           <el-select v-model="uploadData.saleType" clearable placeholder="请选择">
             <el-option
               v-for="item in saleTypes"
@@ -46,7 +46,7 @@
           </el-select>
       </el-form-item>
       
-      <el-form-item label="配送方式" v-if="dtype == 2">
+      <el-form-item label="配送方式" v-if="dtype == 8">
           <el-select v-model="uploadData.psType" clearable placeholder="请选择">
             <el-option
               v-for="item in options"
@@ -118,6 +118,7 @@ export default {
     querySearch(queryString, cb){
       wanglai({ type: this.dtype })
         .then(res => {
+          console.log(res);
           res.wanglaiInfo.forEach(item => {
             item.value = `${item.name}  ${item.suoxie}`;
           });
@@ -134,15 +135,12 @@ export default {
       this.uploadData.bw_id = item.bw_id;
     },
     getUserInfo() {
-      // this.$axios
-      //   .post("/api/user")
-      //   .then(res => {
-      //     this.uploadData.be_id4 = res.data.be_id;
-      //     this.userInfo = res.data;
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
+      let user = JSON.parse(localStorage.getItem('userInfo'));
+      this.userInfo = user;
+      this.uploadData.be_id = 
+      this.uploadData.be_id2 = 
+      this.uploadData.be_id3 = 
+      this.uploadData.be_id4 = user.be_id;
     },
     setTimeDateFmt(s) {
       // 个位数补齐十位数

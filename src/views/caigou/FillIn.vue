@@ -6,7 +6,7 @@
       <el-tag size="mini">新建单据</el-tag>
     </div>
     <div class="fillIn-body">
-      <PurchasePlan :dtype="1" ref="childPlan" :uploaddata="uploadData" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
+      <PurchasePlan :dtype="2" ref="childPlan" :uploaddata="uploadData" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
       <ProductTable ref="childTable" :status="'edit'" :tablelist="tableList"></ProductTable>
       <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c" :fanweik="fanwei_k"></ProductInput>
       <div class="caozuo">
@@ -57,6 +57,7 @@ export default {
   },
   methods: {
     wanglaiInfo(value) {
+      console.log(value,"wanglai info")
       this.wanglaiList = value;
       this.fanwei_c = value.fanwei.split(",");
       this.fanwei_k = value.fanwei_c;

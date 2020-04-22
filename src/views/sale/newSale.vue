@@ -9,7 +9,7 @@
       <el-container>
         <el-main>
           <PurchasePlan
-            :dtype="2"
+            :dtype="9"
             ref="childPlan"
             :uploaddata="uploadData"
             @wanglaiInfo="wanglaiInfo"
@@ -50,6 +50,7 @@ import PurchasePlan from "@/components/caigou/PurchasePlan";
 import ProductTable from "@/components/caigou/ProductTable";
 import ProductInput from "@/components/caigou/ProductInput";
 import ProInfo from "@/components/sale/proinfo";
+import { wanglai } from "@/utils/api";
 export default {
   name: "fillIn",
   components: {

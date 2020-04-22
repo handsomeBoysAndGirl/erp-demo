@@ -6,7 +6,7 @@
       <el-tag size="mini">审核中</el-tag>
     </div>
     <div class="fillIn-body">
-      <PurchasePlan :uploaddata="danjuList" :type="1" :canEdit="false" ref="childPlan" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
+      <PurchasePlan :uploaddata="danjuList" :dtype="2" :canEdit="false" ref="childPlan" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
       <ProductTable ref="childTable" :status="'123'" :tablelist="tableList"></ProductTable>
       <div class="caozuo">
         <el-button @click="back">退出</el-button>

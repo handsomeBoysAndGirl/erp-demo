@@ -13,8 +13,8 @@
       width="50">
     </el-table-column>
       <el-table-column prop="danhao" label="单号" width="180"></el-table-column>
-      <el-table-column prop="date" label="日期" width="180"></el-table-column>
-      <el-table-column prop="typeInfo" label="单据类型"></el-table-column>
+      <el-table-column prop="date" label="日期" width="100"></el-table-column>
+      <el-table-column prop="typeInfo" label="单据类型"  width="180"></el-table-column>
       <el-table-column label="往来">
         <template slot-scope="scope">
           <span>{{scope.row.wanglai}}</span>
@@ -24,14 +24,14 @@
           <el-tag type="warning" v-if="scope.row.beizhu != ''">{{scope.row.beizhu}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="执行状态">
+      <el-table-column label="执行状态"  width="100">
         <template slot-scope="scope">
                 <span v-show='scope.row.runtype == 3'><el-tag type="success">执行完成</el-tag></span>
                 <span v-show='scope.row.runtype == 1'><el-tag>等待执行</el-tag></span>
                 <span v-show='scope.row.runtype == 0'><el-tag type="warning">正在执行</el-tag></span>
         </template>
       </el-table-column>
-      <el-table-column prop="heji_pre" label="总金额"></el-table-column>
+      <el-table-column prop="heji_pre" label="总金额"  width="100"></el-table-column>
       <el-table-column label="操作" width="100">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
