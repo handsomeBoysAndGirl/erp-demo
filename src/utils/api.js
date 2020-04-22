@@ -7,8 +7,19 @@ export const apiLogin = data => post("/api/login",data);
 export const wanglai = data => get("/api/wanglai",data);
 
 //获取销售的具体药品
-export const getskuall = data =>get("/api/allsku",data);
+export const getskuall = data =>get("/api/produit/sale",data);
+/**
+ *  bp_id 
+    bw_id 
+    fanweik 
+ */
 
+//获取近十次销售价格
+export const getprice = data =>get("/api/price",data);
+/**
+ * bp_id
+ * psk_id
+ */
 
 //发票部分
 //获取所有发票列表
@@ -42,3 +53,5 @@ export const getCaogaoDetail = data => get("/api/caogao/detail",data);
 export const getDanju = data => get("/api/danju",data);
 //获取单据详情
 export const getDanjuDetail = data => get("/api/danju/Detail",data);
+
+

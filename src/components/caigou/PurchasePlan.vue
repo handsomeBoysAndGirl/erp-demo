@@ -2,7 +2,7 @@
   <!-- 采购计划单 -->
   <section>
     <el-form :inline="true" :model="uploadData" class="demo-form-inline">
-      <el-form-item :label="dtype == 1 ? '供应商' : '客户'">
+      <el-form-item :label="dtype == 2 ? '供应商' : '客户'">
         <el-autocomplete
           class="inline-input"
           v-model="uploadData.wanglai"
@@ -31,11 +31,11 @@
         ></el-date-picker>
       </el-form-item>
       <br>
-      <el-form-item label="销售范围" v-show="uploadData.wanglai != null && uploadData.wanglai.length>0">
+      <el-form-item label="销售范围" v-if="uploadData.wanglai != null && uploadData.wanglai.length>0 && dtype == 9">
         <el-tag type="success" v-for="(item,index) in allowfw" :key='index'>{{item}}</el-tag>
       </el-form-item>
 
-      <el-form-item label="控销范围" v-show="uploadData.wanglai != null && uploadData.wanglai.length>0">
+      <el-form-item label="控销范围" v-if="uploadData.wanglai != null && uploadData.wanglai.length>0 && dtype == 9">
         <el-tag type="danger" v-for="(item,index) in banfw" :key='index'>{{item}}</el-tag>
       </el-form-item>
       <br>
@@ -52,7 +52,7 @@
       </el-form-item>
 
 
-       <el-form-item label="配送方式" v-if="dtype == 2">
+       <el-form-item label="配送方式" v-if="dtype == 9">
           <el-select v-model="psType" clearable placeholder="请选择">
             <el-option
               v-for="item in options"
@@ -64,7 +64,7 @@
       </el-form-item>
       
 
-       <el-form-item label="销售方式" v-if="dtype == 2">
+       <el-form-item label="销售方式" v-if="dtype == 9">
           <el-select v-model="psType" clearable placeholder="请选择">
             <el-option
               v-for="item in saleType"
