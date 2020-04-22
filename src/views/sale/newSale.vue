@@ -9,7 +9,7 @@
       <el-container>
         <el-main>
           <PurchasePlan
-            :dtype="2"
+            :dtype="9"
             ref="childPlan"
             :uploaddata="uploadData"
             @wanglaiInfo="wanglaiInfo"
