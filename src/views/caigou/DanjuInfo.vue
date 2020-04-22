@@ -21,6 +21,7 @@
 <script>
 import PurchasePlan from "@/components/caigou/PurchasePlan";
 import ProductTable from "@/components/caigou/ProductTable";
+import {} from "@/utils/api"
 export default {
   name: "fillIn",
   components: {
@@ -41,7 +42,7 @@ export default {
       this.wanglaiList = value;
       this.fanwei_c = value.fanwei_c.split(",");
     },
-    sendDraft() {
+    sendDraft(type) {
       console.log(this.$refs.childPlan.uploadData);
       console.log(this.$refs.childTable.tableData);
       console.log(this.$refs.childTable.sumPrices);

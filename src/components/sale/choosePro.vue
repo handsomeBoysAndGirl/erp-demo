@@ -94,15 +94,13 @@ import { getskuall } from "@/utils/api";
             this.sendData(this.currentRow);
         }
       },
-      switchPro(bpid,name,bwid){
-       
+      switchPro(bpid,name,bwid,fanwei){
         this.dialogTableVisible = !this.dialogTableVisible;
         if(this.dialogTableVisible && bpid != '' && bwid !=''){
              this.term = name
              this.bwid= bwid
-             this.bpid = bpid
-             getskuall({'term':name,'bw_id':bwid,'bp_id':bpid}).then(res=>{
-               console.log(res)
+             this.bpid = bpid 
+             getskuall({'bw_id':bwid,'bp_id':bpid,'fanweic':fanwei}).then(res=>{
                if(res.msg = 'success'){
                  this.gridData = res.data
                }
@@ -112,7 +110,6 @@ import { getskuall } from "@/utils/api";
       sendData(item){
          this.$emit('selectedData',item)
          this.dialogTableVisible = !this.dialogTableVisible;
-
       },
       setCurrent(row) {
         this.$refs.singleTable.setCurrentRow(row);
