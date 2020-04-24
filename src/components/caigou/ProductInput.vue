@@ -7,7 +7,7 @@
       :disabled="dis"
       :fetch-suggestions="querySearch"
       placeholder="请输入内容"
-      :trigger-on-focus="false"
+      :trigger-on-focus="false" 
       @select="handleSelect"
     ></el-autocomplete>
     <div class="productInput-type">
@@ -53,15 +53,16 @@ export default {
   },
   watch: {
     bwid() {
-      if (this.bwid != "0") {
+      if (this.bwid != "0" && this.bwid != '') {
         this.dis = false;
       }
     }
   },
-  methods: {
-    querySearch(queryString, cb) {
-      produit({ name: queryString, fanweik: this.fanweik })
+  methods: { 
+    querySearch(queryString,cb) {
+      produit({ name: queryString,fanweik: this.fanweik })
         .then(res => {
+          console.log(res.produitInfo)
           cb(res.produitInfo);
         })
         .catch(err => {
@@ -70,15 +71,15 @@ export default {
     },
     handleSelect(value) {
       this.product = "";
-      if(this.dtype == 2){
-            this.$refs.choosepro.switchPro(value.bp_id,value.name,this.bwid,this.fanweic)
+      if(this.dtype == 8){ 
+          this.$refs.choosepro.switchPro(value.bp_id,value.name,this.bwid,this.fanweik)
       }else{
         this.$emit("productInfo", value);
       }
     },
     handleSaleSelect(value){
         this.product = "";
-         this.$emit("productInfo", value);
+        this.$emit("productInfo", value);
     }
   }
 };
@@ -93,6 +94,7 @@ export default {
 }
 .productInput-box {
   padding: 15px 0 0 0;
+  margin-bottom: 10px;
 }
 .productInput-type {
   margin-top: 15px;

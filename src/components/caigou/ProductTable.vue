@@ -8,7 +8,7 @@
     style="width: 100%"
   >
     <el-table-column type="index" width="50"></el-table-column>
-    <el-table-column prop="name" label="品名" width="180"></el-table-column>
+    <el-table-column prop="name" label="品名" width="150"></el-table-column>
     <el-table-column prop="about" label="产品相关信息"></el-table-column>
     <el-table-column prop="pihao" label="批号" width="100"></el-table-column>
     <el-table-column prop="riqi" label="生产日期" width="200"></el-table-column>
@@ -20,7 +20,7 @@
             @keyup.alt.delete.native="deleteRow(scope.$index, tableData)"
             type="number"
             min="0"
-            @blur="checkNum(scope.row.shuliang,scope.row.maxshuliang,scope.$index)"
+            @blur="checkNum(scope.row.shuliang,scope.row.maxShuliang,scope.$index,scope.row.step)"
             :class="numbersequal(scope.row.shuliang,scope.row.step)? '':'error'"
             :step="scope.row.step"
             v-model="scope.row.shuliang"
@@ -69,6 +69,7 @@ export default {
   },
   data() {
     return {
+      canSubmit:false,
       tableData: [],
       sumPrices: [],
       reg: /^(.*\..{4}).*$/
@@ -82,22 +83,28 @@ export default {
   },
   methods: {
     //检查数量
-    checkNum(val,max,index){
+    checkNum(val,max,index,step){
+       if(val !=0 && val%step != 0){
+         this.$message({
+           type:'warning',
+           message:`价格设置失败，当前药品的销售基数为${step}。已重置为0`
+         })
+        this.tableData[index].shuliang = 0
+       }
        if(val>max){
          this.tableData[index].shuliang = max
        }
     },
     hasSelectedRow(row){
-      console.log(12312312)
         this.$emit('hasSelectedRows',row)
     },
     //求余精度处理
-    numbersequal(a, b) {
+    numbersequal(a,b) {
       let number = 10000;
       return (a * number) % (b * number) == 0;
     },
     //乘法精度处理
-    multiplication(a, b) {
+    multiplication(a,b) {
       let number = 10000;
       return (a * number * (b * number)) / 100000000;
     },

@@ -29,5 +29,26 @@ export default {
             }
         }
         return false;
-    }
+    },
+    
+    randomNumber:()=> {
+        const now = new Date();
+        let month = now.getMonth() + 1;
+        let day = now.getDate();
+        let hour = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+        month = this.setTimeDateFmt(month);
+        day = this.setTimeDateFmt(day);
+        hour = this.setTimeDateFmt(hour);
+        minutes = this.setTimeDateFmt(minutes);
+        seconds = this.setTimeDateFmt(seconds);
+        let orderCode =
+          "CD" +
+          now.getFullYear().toString() +
+          month.toString() +
+          day +
+          Math.round(Math.random() * 1000000).toString();
+        return orderCode;
+      }
 }

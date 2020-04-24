@@ -43,14 +43,24 @@ export default {
       console.log(value);
     },
     showInfo(value) {
-      this.$router.push({
-        path: "/fillIn",
-        query: {
-          dc_id: value.dc_id,
-          type: 'caogao'
-        }
-      });
-      console.log(value);
+   
+      if(value.type == 1){
+          this.$router.push({
+            path: "/fillIn",
+            query: {
+              dc_id: value.dc_id,
+              type: 'caogao'
+            }
+          });
+      }else{
+        this.$router.push({
+            path: "/newsale",
+            query: {
+              dc_id: value.dc_id,
+              type: 'caogao'
+            }
+          });
+      }
     }
   },
   created() {

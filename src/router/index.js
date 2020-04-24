@@ -92,6 +92,15 @@ const routes = [
           noCache: true
         }
       },{
+        path: "/stock",
+        name: "stock",
+        component: () => import('../views/stock/psk_stock.vue'),
+        meta: {
+          title: '库存查询',
+          icon: 'dashboard',
+          noCache: true
+        }
+      },{
         path: "/newfapiao/",
         name: "newfapiao",
         component: () => import('../views/fapiao/newfapiao.vue'),

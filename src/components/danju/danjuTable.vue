@@ -49,12 +49,15 @@ export default {
     tablelist: {
       type: Array,
       default: []
+    },
+    dtype:{
+      type: Number,
+      default:1
     }
   },
   methods:{
     handleClick(row) {
       this.$emit("showInfo", row);
-      console.log(row);
     }
   }
 };

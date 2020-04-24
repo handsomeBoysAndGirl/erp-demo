@@ -21,6 +21,16 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI)
 
+router.beforeEach((to,from,next)=>{
+  if(to.name === 'saleList'){
+      to.matched[1].meta.title = "销售"
+  }else if(to.name === '/'){
+      to.matched[1].meta.title = "采购"
+  }
+  next()
+})
+
+
 new Vue({
   router,
   render: h => h(App)

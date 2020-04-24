@@ -6,7 +6,7 @@
       <el-tag size="mini">新建单据</el-tag>
     </div>
     <div class="fillIn-body">
-      <PurchasePlan :dtype="2" ref="childPlan" :uploaddata="uploadData" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
+      <PurchasePlan :dtype="1" ref="childPlan" :uploaddata="uploadData" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
       <ProductTable ref="childTable" :status="'edit'" :tablelist="tableList"></ProductTable>
       <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c" :fanweik="fanwei_k"></ProductInput>
       <div class="caozuo">
@@ -57,9 +57,12 @@ export default {
   },
   methods: {
     wanglaiInfo(value) {
-      console.log(value,"wanglai info")
+      console.log(value,'***********')
       this.wanglaiList = value;
-      this.fanwei_c = value.fanwei.split(",");
+      this.fanwei_c =value.fanwei.length>1?value.fanwei.split(","):'';
+      
+      
+      console.log(this.fanwei_c,'***********')
       this.fanwei_k = value.fanwei_c;
     },
     productInfo(value) {
@@ -73,6 +76,7 @@ export default {
     saveCaogao() { //保存草稿
       let danju_caogao = this.$refs.childPlan.uploadData;
       danju_caogao.type = 1;
+      danju_caogao.dc_id = '';
       danju_caogao.list = JSON.stringify(this.$refs.childTable.tableData);
       danju_caogao.heji_pre = this.$refs.childTable.sumPrices[9];
       addCaogao({ danju_cao: JSON.stringify(danju_caogao)})

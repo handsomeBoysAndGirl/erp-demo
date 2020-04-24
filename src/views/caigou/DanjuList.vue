@@ -1,6 +1,6 @@
 <template>
   <section>
-    <Search :dtype="2" @search="search" @searchAll="searchAll"></Search>
+    <Search :dtype="1" @search="search" @searchAll="searchAll"></Search>
     <DanjuTable :tablelist="danjuList" @showInfo="showInfo"></DanjuTable>
     <el-pagination background layout="prev, pager, next"
       @current-change="handleCurrentChange"
@@ -44,9 +44,9 @@ export default {
       })
     },
     search(value) {
-     let datapra = {
-       ...this.data1
-     };
+      let datapra = {
+        ...this.data1
+      };
       if (value.date) {
         value.beginDate = value.date[0];
         value.endDate = value.date[1];
