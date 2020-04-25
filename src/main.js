@@ -22,9 +22,10 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 
 router.beforeEach((to,from,next)=>{
+  console.log(to.name,from,'__________')
   if(to.name === 'saleList'){
       to.matched[1].meta.title = "销售"
-  }else if(to.name === '/'){
+  }else if(to.name === 'danjulist' || to.name === '/'){
       to.matched[1].meta.title = "采购"
   }
   next()

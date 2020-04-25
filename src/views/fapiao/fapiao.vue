@@ -195,7 +195,7 @@ export default {
       }
   },
   created(){
-    this.getallList();
+    //this.getallList();
   }
 };
 </script>

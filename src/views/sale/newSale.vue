@@ -53,7 +53,7 @@ import PurchasePlan from "@/components/caigou/PurchasePlan";
 import ProductTable from "@/components/caigou/ProductTable";
 import ProductInput from "@/components/caigou/ProductInput";
 import ProInfo from "@/components/sale/proinfo";
-import { addCaogao, getCaogaoDetail } from "@/utils/api";
+import { addCaogao, getCaogaoDetail,insertData } from "@/utils/api";
 export default {
   name: "fillIn",
   components: {
@@ -173,6 +173,10 @@ export default {
       }
     },
     sendDraft(type) {
+      
+      this.$refs.childTable.tableData.forEach(item=>{
+          item.jine = item.shuliang * item.jiage
+      })
       let pramas = {
         ...this.$refs.childPlan.uploadData,
         dc_id:this.dc_id,
@@ -193,7 +197,21 @@ export default {
           }
         });
       } else if (type == 2 && this.checkSubmitFrom()) {
-        alert("可以直接提交");
+        insertData({ danju: JSON.stringify(pramas) }).then(res=>{
+          console.log(res)
+            if(res.status = 'success'){
+               this.$message({
+                  type:'success',
+                  message:'销售计划单已进入山海内勤处理，请等候处理结果'
+               })
+              this.$router.push({path:'/saleList'})
+            }else{
+              this.$message({
+                  type:'error',
+                  message:'单据进入山海内勤失败，请稍后再试'
+               })
+            }
+        })
       } else {
       }
     }

@@ -10,9 +10,9 @@
       <ProductTable ref="childTable" :status="'edit'" :tablelist="tableList"></ProductTable>
       <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c" :fanweik="fanwei_k"></ProductInput>
       <div class="caozuo">
-        <el-button @click="saveCaogao">保存草稿</el-button>
-        <el-button @click="sendDraft">审核单据</el-button>
-        <el-button @click="sendDraft">退出</el-button>
+        <el-button @click="sendDraft(1)">保存草稿</el-button>
+        <el-button @click="sendDraft(2)">审核单据</el-button>
+        <el-button @click="quit">退出</el-button>
       </div>
     </div>
     <div class="fillIn-footer">
@@ -25,7 +25,7 @@
 import PurchasePlan from "@/components/caigou/PurchasePlan";
 import ProductTable from "@/components/caigou/ProductTable";
 import ProductInput from "@/components/caigou/ProductInput";
-import {addCaogao,getCaogaoDetail} from "@/utils/api";
+import {addCaogao,getCaogaoDetail,insertData} from "@/utils/api";
 export default {
   name: "fillIn",
   components: {
@@ -40,8 +40,10 @@ export default {
       wanglaiList: {
         bw_id: 0
       },
+      dc_id:'',
       tableList: [],
       uploadData: {
+        dc_id:'',
         wanglai: "",
         bw_id: "", //往来抬头
         be_id: "", //经手人
@@ -68,18 +70,65 @@ export default {
     productInfo(value) {
       this.tableList.push(value);
     },
-    sendDraft() {
-      // console.log(this.$refs.childPlan.uploadData);
-      // console.log(this.$refs.childTable.tableData);
-      // console.log(this.$refs.childTable.sumPrices);
+    checkBuyData(){
+           let res = true;
+      if (
+        this.$refs.childPlan.uploadData.bw_id != 0 &&
+        this.$refs.childPlan.uploadData.bw_id != ""
+      ) {
+        let number = 1;
+        this.$refs.childTable.tableData.some((item, index) => {
+          if (item.shuliang == 0 || item.jiage == 0) {
+            res = false;
+            number == 1 && this.alertMsg(`第${index + 1}行数量或者单价出错，请检查后再提交`);
+            ++number;
+            return false;
+          }
+        });
+      } else {
+        this.alertMsg(`客户获取错误，请刷新后再试！`);
+        res = false;
+      }
+      return res;
+    },quit(){
+
     },
-    saveCaogao() { //保存草稿
-      let danju_caogao = this.$refs.childPlan.uploadData;
-      danju_caogao.type = 1;
-      danju_caogao.dc_id = '';
-      danju_caogao.list = JSON.stringify(this.$refs.childTable.tableData);
-      danju_caogao.heji_pre = this.$refs.childTable.sumPrices[9];
-      addCaogao({ danju_cao: JSON.stringify(danju_caogao)})
+    sendDraft(type) {
+        this.$refs.childTable.tableData.forEach(item=>{
+            item.jine = item.shuliang * item.jiage
+        })
+        let pramas = {
+          ...this.$refs.childPlan.uploadData,
+          dc_id:this.dc_id,
+          type:1,
+          list: JSON.stringify(this.$refs.childTable.tableData),
+          heji_pre: this.$refs.childTable.sumPrices[
+            this.$refs.childTable.sumPrices.length - 1
+          ]
+        };
+        type === 1 ? this.saveCaogao(pramas):this.submitForm(pramas);
+    },
+    alertMsg(msg) {
+      this.$message({
+        type: "warning",
+        message: msg
+      });
+    },
+    submitForm(pramas){
+        if(this.checkBuyData()){
+            insertData({danju:JSON.stringify(pramas)}).then(res=>{
+              if(res.status == 'success'){
+                  this.$message({
+                      type: res.status,
+                      message:'采购计划已进入山海内勤，请耐心等候'
+                    })
+                  this.$router.push('/danju')  
+              }
+            })
+        };
+    },
+    saveCaogao(pramas) { //保存草稿
+      addCaogao({ danju_cao: JSON.stringify(pramas)})
         .then(res => {
           if(res.status == "success") {
             this.$router.push('/caogao');
@@ -100,7 +149,6 @@ export default {
           this.tableList = res.caogao.list;
           delete res.caogao.list;
           this.uploadData = res.caogao;
-          console.log(this.uploadData);
           this.wanglaiList.bw_id = this.uploadData.bw_id;
         }
       })
@@ -111,6 +159,7 @@ export default {
   },
   created() {
     if (this.$route.query.type == "caogao") {
+      this.dc_id = this.$route.query.dc_id
       this.getCaogaoDet(this.$route.query.dc_id);
     } else {
       if (this.$route.query.di_id) {

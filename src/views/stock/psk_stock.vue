@@ -2,8 +2,8 @@
   <div class="bg">
     <div class="search_component">
       <el-form :inline="true" class="demo-form-inline">
-        <el-form-item clearable label="药品类型">
-          <el-select v-model="searchs.gsp" placeholder="请选择">
+        <el-form-item  label="药品类型">
+          <el-select v-model="searchs.gsp" clearable  placeholder="请选择">
             <el-option
               v-for="item in enums.gsp"
               :key="item.value"
@@ -13,8 +13,8 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item clearable label="药品剂型">
-          <el-select v-model="searchs.jx" placeholder="请选择">
+        <el-form-item  label="药品剂型">
+          <el-select v-model="searchs.jx" clearable placeholder="请选择">
             <el-option
               v-for="item in enums.jx"
               :key="item.value"
@@ -61,21 +61,19 @@
     <div class="table">
       <el-table :data="tableData" style="width: 100%" max-height="500">
         <el-table-column fixed type="index" width="50"></el-table-column>
-        <el-table-column prop="bwName" label="最后养护" width="100"></el-table-column>
-        <el-table-column prop="type" label="产品经理" width="120"></el-table-column>
-        <el-table-column prop="be_id1Name" label="商品名" width="120"></el-table-column>
-        <el-table-column prop="dateline1" label="类型" width="150"></el-table-column>
-        <el-table-column prop="be_id2Name" label="产品信息" width="120"></el-table-column>
-        <el-table-column prop="dateline2" label="厂家" width="120"></el-table-column>
-        <el-table-column prop="jine" label="批次" width="120"></el-table-column>
-        <el-table-column prop="status" label="生产日期" width="120"></el-table-column>
-        <el-table-column prop="zip" label="有效期" width="120"></el-table-column>
-        <el-table-column prop="zip" label="数量" width="120"></el-table-column>
-        <el-table-column prop="zip" label="单位" width="120"></el-table-column>
-        <el-table-column prop="zip" label="成本" width="120"></el-table-column>
-        <el-table-column prop="zip" label="金额" width="120"></el-table-column>
+        <el-table-column prop="date" label="最后养护" width="100"></el-table-column>
+        <el-table-column prop="proInfo" label="产品经理" width="120"></el-table-column>
+        <el-table-column prop="jxInfo" label="剂型" width="120"></el-table-column>
+        <el-table-column prop="name" label="商品名" width="120"></el-table-column>
+        <el-table-column prop="gspInfo" label="类型" width="150"></el-table-column>
+        <el-table-column prop="about" label="产品信息" width="120"></el-table-column>
+        <el-table-column prop="factory" label="厂家" width="120"></el-table-column>
+        <el-table-column prop="riqi" label="生产日期" width="120"></el-table-column>
+        <el-table-column prop="xiaoqi" label="有效期" width="120"></el-table-column>
+        <el-table-column prop="shuliang" label="数量" width="120"></el-table-column>
+        <el-table-column prop="danwei" label="单位" width="120"></el-table-column>
       </el-table>
-      <Pages class="pages" @getPagesVal='newPages' v-on:getPagesVal="5" :totalPage="allPages" />
+      <Pages class="pages" @getPagesVal='newPages' v-on:getPagesVal="50" :totalPage="allPages" />
     </div>
   </div>
 </template>
@@ -97,10 +95,10 @@ export default {
           gsp:'',
           jx:'',
           order:'',
-          pro:'',
+          pro:-1,
           page:1
       },
-      allPages:10,
+      allPages:1,
       enums:{
 
       },
@@ -128,17 +126,20 @@ export default {
       });
     },
     searchAll() {
-        let newSearch =  {name:'',factory:'',gsp:'',jx:'',order:0,pro:'',page:1}
-         getAllStock(newSearch).then(res=>{
+        this.searchs =  {name:'',factory:'',gsp:'',jx:'',order:1,pro:-1,page:1}
+        this.searchs.order = this.options[0].value
+         getAllStock(this.searchs).then(res=>{
              if(res.status === 'success'){
-                 this.tableData =res.data
+                  this.tableData = res.stock.info
+                  this.allPages = res.stock.count
              }   
         })
     },
     search() {
         getAllStock(this.searchs).then(res=>{
              if(res.status === 'success'){
-                 this.tableData =res.data
+                 this.tableData = res.stock.info
+                  this.allPages = res.stock.count
              }   
         })
     },
@@ -152,10 +153,17 @@ export default {
     this.searchs.order = this.options[0].value
     enums().then(res=>{
        if(res.status == 'success'){
-           this.enums = res.enumsInfo
-           window.localStorage.setItem('enums',JSON.stringify(res.enumsInfo))
-           return  getAllStock(this.searchs)
+          let arr = [{be_id:-1,name:'所有'},{be_id:0,name:'山海'}];
+          res.enumsInfo.pro = arr.concat(res.enumsInfo.pro)
+          this.enums = res.enumsInfo
+          window.localStorage.setItem('enums',JSON.stringify(res.enumsInfo))
+          return  getAllStock(this.searchs)
        }
+    }).then(result=>{
+      if(result.message == 'success'){
+          this.tableData = result.stock.info
+          this.allPages = result.stock.count
+      }
     })
     
       

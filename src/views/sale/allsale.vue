@@ -69,7 +69,7 @@ export default {
       })
     },
     showInfo(value) {
-      this.$router.push(`/info/${value.di_id}`);
+      this.$router.push(`/info/${value.di_id}?type=8`);
     },
     handleCurrentChange(val){
       this.data1.page = val;

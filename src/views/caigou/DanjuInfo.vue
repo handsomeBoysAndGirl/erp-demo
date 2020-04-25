@@ -2,11 +2,12 @@
   <!-- 填写采购计划单 -->
   <section>
     <div class="fillIn-header">
-      <h1>采购计划单详情</h1>
+      <h1 v-if="dtypes == 8">销售计划单详情</h1>
+      <h1 v-else>采购计划单详情</h1>
       <el-tag size="mini">审核中</el-tag>
     </div>
     <div class="fillIn-body">
-      <PurchasePlan :uploaddata="danjuList" :dtype="1" :canEdit="false" ref="childPlan" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
+      <PurchasePlan :uploaddata="danjuList" :dtype="dtypes" :canEdit="false" ref="childPlan" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
       <ProductTable ref="childTable" :status="'123'" :tablelist="tableList"></ProductTable>
       <div class="caozuo">
         <el-button @click="back">退出</el-button>
@@ -30,6 +31,7 @@ export default {
   },
   data() {
     return {
+      dtypes:2,
       wanglaiList: {
         bw_id: "0"
       },
@@ -40,7 +42,6 @@ export default {
   methods: {
     wanglaiInfo(value) {
       this.wanglaiList = value;
-      console.log(value)
      // this.fanwei_c = value.fanwei_c.split(",");
     },
     sendDraft(type) {
@@ -65,7 +66,10 @@ export default {
     }
   },
   created() {
-    this.getdanjuInfo(this.$route.params.di_id);
+      this.getdanjuInfo(this.$route.params.di_id);
+      if(this.$route.query.hasOwnProperty("type")){
+          this.dtypes = this.$route.query.type
+      }
   }
 };
 </script>

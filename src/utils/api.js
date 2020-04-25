@@ -5,6 +5,9 @@ export const apiLogin = data => post("/api/login",data);
 
 //获取往来单位
 export const wanglai = data => get("/api/wanglai",data);
+
+//新增销售采购数据
+export const insertData = data => post("/api/shenhe",data)
 /**
  * bp_id
  * psk_id
@@ -62,6 +65,7 @@ export const getDanjuDetail = data => get("/api/danju/Detail",data);
 
 /*  库存查询 */
 export const enums = data => get('/api/enums',data)
-export const getAllStock = data => post('/api/stock',data)
+
+export const getAllStock = data => get('/api/stock',data)
 
 

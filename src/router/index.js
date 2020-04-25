@@ -37,7 +37,7 @@ const routes = [
           name: "danjuinfo",
           component: () => import('../views/caigou/DanjuInfo.vue'),
           meta: {
-            title: '采购计划单详情',
+            title: '详情',
             icon: 'dashboard',
             noCache: true
           }
