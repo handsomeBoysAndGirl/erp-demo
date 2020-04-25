@@ -15,7 +15,7 @@ import qs from 'qs'
 const service = axios.create({
 });
 //axios.defaults.baseURL = 'http://localhost:8089';
-axios.defaults.baseURL = 'http://192.168.2.136:5000';
+axios.defaults.baseURL = 'http://192.168.2.236:5000';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 
@@ -122,8 +122,9 @@ export function get(url, params) {
 }
 
 export function post(url, params) {
+    console.log(params)
     return new Promise((resolve, reject) => {
-        axios.post(url,JSON.stringify(params)).then(res => {
+        axios.post(url,params).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err.data)
