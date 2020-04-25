@@ -26,7 +26,7 @@ export default {
       searchAllInfo: {},
       total:0,
       data1: {
-        type:9,
+        type:8,
         id:JSON.parse(localStorage.getItem('userInfo')).be_id,
         page: 1
       }

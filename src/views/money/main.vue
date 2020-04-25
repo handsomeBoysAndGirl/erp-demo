@@ -12,7 +12,7 @@
         </div>
       </div>
       <span class="line"></span>
-      <div class="item">
+      <div class="item" style="cursor:pointer">
         <div>
           <h2 class="numbers">{{money.wfc.toFixed(2)}}元</h2>
           <h3>正在确认（WFC）</h3>

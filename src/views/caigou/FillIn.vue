@@ -59,12 +59,8 @@ export default {
   },
   methods: {
     wanglaiInfo(value) {
-      console.log(value,'***********')
       this.wanglaiList = value;
       this.fanwei_c =value.fanwei.length>1?value.fanwei.split(","):'';
-      
-      
-      console.log(this.fanwei_c,'***********')
       this.fanwei_k = value.fanwei_c;
     },
     productInfo(value) {
