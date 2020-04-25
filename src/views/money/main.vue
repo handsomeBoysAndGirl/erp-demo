@@ -130,15 +130,9 @@
           inputPattern: /^[+-]?(0|([1-9]\d*))(\.\d+)?$/,
           inputErrorMessage: '金额必须为数字'
         }).then(({ value }) => {
-          this.$message({
-            type: 'success',
-            message: '你的邮箱是: ' + value
-          });
+          //输入后进行后台操作
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          });       
+          //取消操作       
         });
       }
     }

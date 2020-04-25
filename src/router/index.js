@@ -3,7 +3,9 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+  { path: '/', redirect: '/login'},
+  {
     path: '/home',
     name: 'home',
     component: () => import('../views/Home.vue'),
@@ -86,6 +88,15 @@ const routes = [{
         component: () => import('../views/fapiao/fapiao.vue'),
         meta: {
           title: '发票中心',
+          icon: 'dashboard',
+          noCache: true
+        }
+      },{
+        path: "/stock",
+        name: "stock",
+        component: () => import('../views/stock/psk_stock.vue'),
+        meta: {
+          title: '库存查询',
           icon: 'dashboard',
           noCache: true
         }

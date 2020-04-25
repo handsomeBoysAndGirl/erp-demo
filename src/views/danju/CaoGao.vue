@@ -9,6 +9,7 @@
 <script>
 import Search from "@/components/caigou/Search";
 import DanjuTable from "@/components/danju/danjuTable";
+import {getCaogao} from "@/utils/api";
 export default {
   name: "caogao",
   components: {
@@ -24,11 +25,10 @@ export default {
   },
   methods: {
     getDanjuList() {
-      this.$axios
-        .post("/api/danjuIndex")
+        getCaogao()
         .then(res => {
-          this.danjuList = res.data;
           console.log(res);
+          this.danjuList = res.caogao
         })
         .catch(err => {
           console.log(err);
@@ -43,13 +43,24 @@ export default {
       console.log(value);
     },
     showInfo(value) {
-      this.$router.push({
-        path: "/fillIn",
-        query: {
-          di_id: value.di_id
-        }
-      });
-      console.log(value);
+   
+      if(value.type == 1){
+          this.$router.push({
+            path: "/fillIn",
+            query: {
+              dc_id: value.dc_id,
+              type: 'caogao'
+            }
+          });
+      }else{
+        this.$router.push({
+            path: "/newsale",
+            query: {
+              dc_id: value.dc_id,
+              type: 'caogao'
+            }
+          });
+      }
     }
   },
   created() {

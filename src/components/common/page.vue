@@ -17,7 +17,7 @@
     },
     methods: {
       handleCurrentChange(val) {
-            this.$emit('getPagesVal',val)
+        this.$emit('getPagesVal',val)
       }
     },
     data() {

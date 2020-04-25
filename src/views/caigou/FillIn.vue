@@ -8,9 +8,9 @@
     <div class="fillIn-body">
       <PurchasePlan :dtype="1" ref="childPlan" :uploaddata="uploadData" @wanglaiInfo="wanglaiInfo"></PurchasePlan>
       <ProductTable ref="childTable" :status="'edit'" :tablelist="tableList"></ProductTable>
-      <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c"></ProductInput>
+      <ProductInput @productInfo="productInfo" :bwid="wanglaiList.bw_id" :fanweic="fanwei_c" :fanweik="fanwei_k"></ProductInput>
       <div class="caozuo">
-        <el-button @click="sendDraft">保存草稿</el-button>
+        <el-button @click="saveCaogao">保存草稿</el-button>
         <el-button @click="sendDraft">审核单据</el-button>
         <el-button @click="sendDraft">退出</el-button>
       </div>
@@ -25,6 +25,7 @@
 import PurchasePlan from "@/components/caigou/PurchasePlan";
 import ProductTable from "@/components/caigou/ProductTable";
 import ProductInput from "@/components/caigou/ProductInput";
+import {addCaogao,getCaogaoDetail} from "@/utils/api";
 export default {
   name: "fillIn",
   components: {
@@ -35,8 +36,9 @@ export default {
   data() {
     return {
       fanwei_c: [],
+      fanwei_k: "",
       wanglaiList: {
-        bw_id: "0"
+        bw_id: 0
       },
       tableList: [],
       uploadData: {
@@ -46,7 +48,6 @@ export default {
         be_id2: "", //制单人
         be_id3: "", //审核人
         be_id4: "", //产品经理
-        type: 1, //单据类型
         date: "", //单据日期
         danhao: "", //单号
         beizhu: "",
@@ -56,8 +57,13 @@ export default {
   },
   methods: {
     wanglaiInfo(value) {
+      console.log(value,'***********')
       this.wanglaiList = value;
-      this.fanwei_c = value.fanwei_c.split(",");
+      this.fanwei_c =value.fanwei.length>1?value.fanwei.split(","):'';
+      
+      
+      console.log(this.fanwei_c,'***********')
+      this.fanwei_k = value.fanwei_c;
     },
     productInfo(value) {
       this.tableList.push(value);
@@ -66,15 +72,52 @@ export default {
       // console.log(this.$refs.childPlan.uploadData);
       // console.log(this.$refs.childTable.tableData);
       // console.log(this.$refs.childTable.sumPrices);
+    },
+    saveCaogao() { //保存草稿
+      let danju_caogao = this.$refs.childPlan.uploadData;
+      danju_caogao.type = 1;
+      danju_caogao.dc_id = '';
+      danju_caogao.list = JSON.stringify(this.$refs.childTable.tableData);
+      danju_caogao.heji_pre = this.$refs.childTable.sumPrices[9];
+      addCaogao({ danju_cao: JSON.stringify(danju_caogao)})
+        .then(res => {
+          if(res.status == "success") {
+            this.$router.push('/caogao');
+            this.$message({
+              type: res.status,
+              message: res.message
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getCaogaoDet(dc_id) {
+      getCaogaoDetail({dc_id: dc_id})
+      .then(res => {
+        if (res.status == "success") {
+          this.tableList = res.caogao.list;
+          delete res.caogao.list;
+          this.uploadData = res.caogao;
+          console.log(this.uploadData);
+          this.wanglaiList.bw_id = this.uploadData.bw_id;
+        }
+      })
+      .catch(res => {
+        console.log(res)
+      })
     }
   },
   created() {
-    if (this.$route.query.di_id) {
-      console.log(123);
-      //uploadData
-      //tableList
+    if (this.$route.query.type == "caogao") {
+      this.getCaogaoDet(this.$route.query.dc_id);
     } else {
-      console.log("no");
+      if (this.$route.query.di_id) {
+        console.log(123);
+        //uploadData
+        //tableList
+      }
     }
   }
 };

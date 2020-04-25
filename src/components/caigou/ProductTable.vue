@@ -8,19 +8,19 @@
     style="width: 100%"
   >
     <el-table-column type="index" width="50"></el-table-column>
-    <el-table-column prop="name" label="品名" width="180"></el-table-column>
-    <el-table-column prop="info" label="产品相关信息" width="180"></el-table-column>
-    <el-table-column prop="pihao" label="批号"></el-table-column>
-    <el-table-column prop="riqi" label="生产日期"></el-table-column>
-    <el-table-column prop="xiaoqi" label="有效期"></el-table-column>
-    <el-table-column label="数量">
+    <el-table-column prop="name" label="品名" width="150"></el-table-column>
+    <el-table-column prop="about" label="产品相关信息"></el-table-column>
+    <el-table-column prop="pihao" label="批号" width="100"></el-table-column>
+    <el-table-column prop="riqi" label="生产日期" width="200"></el-table-column>
+    <el-table-column prop="xiaoqi" label="有效期" width="200"></el-table-column>
+    <el-table-column label="数量" width="100">
       <template slot-scope="scope">
         <div v-if="status === 'edit'">
           <el-input
             @keyup.alt.delete.native="deleteRow(scope.$index, tableData)"
             type="number"
             min="0"
-            @blur="checkNum(scope.row.shuliang,scope.row.maxshuliang,scope.$index)"
+            @blur="checkNum(scope.row.shuliang,scope.row.maxShuliang,scope.$index,scope.row.step)"
             :class="numbersequal(scope.row.shuliang,scope.row.step)? '':'error'"
             :step="scope.row.step"
             v-model="scope.row.shuliang"
@@ -31,24 +31,25 @@
         </div>
       </template>
     </el-table-column>
-    <el-table-column prop="danwei" label="单位"></el-table-column>
-    <el-table-column label="单价">
+    <el-table-column prop="danwei" label="单位" width="50"></el-table-column>
+    <el-table-column label="单价" width="100">
       <template slot-scope="scope">
         <div v-if="status === 'edit'">
           <el-input
             type="number"
+            min="0"
             @keyup.alt.delete.native="deleteRow(scope.$index, tableData)"
-            v-model="scope.row.price"
+            v-model="scope.row.jiage"
           ></el-input>
         </div>
         <div v-else>
-          <span>{{scope.row.price}}</span>
+          <span>{{scope.row.jiage}}</span>
         </div>
       </template>
     </el-table-column>
-    <el-table-column prop="heji" label="合计">
+    <el-table-column prop="jine" label="合计" width="100">
       <template slot-scope="scope">
-        <span>{{ multiplication(parseFloat(scope.row.price) , parseFloat(scope.row.shuliang))}}</span>
+        <span>{{ String(multiplication(parseFloat(scope.row.jiage) , parseFloat(scope.row.shuliang))).replace(reg, "$1") }}</span>
       </template>
     </el-table-column>
   </el-table>
@@ -68,8 +69,10 @@ export default {
   },
   data() {
     return {
+      canSubmit:false,
       tableData: [],
-      sumPrices: []
+      sumPrices: [],
+      reg: /^(.*\..{4}).*$/
     };
   },
   watch: {
@@ -80,22 +83,28 @@ export default {
   },
   methods: {
     //检查数量
-    checkNum(val,max,index){
+    checkNum(val,max,index,step){
+       if(val !=0 && val%step != 0){
+         this.$message({
+           type:'warning',
+           message:`价格设置失败，当前药品的销售基数为${step}。已重置为0`
+         })
+        this.tableData[index].shuliang = 0
+       }
        if(val>max){
          this.tableData[index].shuliang = max
        }
     },
     hasSelectedRow(row){
-      console.log(12312312)
         this.$emit('hasSelectedRows',row)
     },
     //求余精度处理
-    numbersequal(a, b) {
+    numbersequal(a,b) {
       let number = 10000;
       return (a * number) % (b * number) == 0;
     },
     //乘法精度处理
-    multiplication(a, b) {
+    multiplication(a,b) {
       let number = 10000;
       return (a * number * (b * number)) / 100000000;
     },
@@ -113,9 +122,9 @@ export default {
           sums[index] = "总价";
           return;
         }
-        if (column.property === "heji") {
+        if (column.property === "jine") {
           values = data.map(item =>
-            Number(this_.multiplication(item.shuliang, item.price))
+            Number(this_.multiplication(item.shuliang, item.jiage))
           );
         }
         if (index === 9) {

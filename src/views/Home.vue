@@ -16,12 +16,11 @@
             <template slot="title">采购</template>
             <el-menu-item index="/danju">采购计划单列表</el-menu-item>
             <el-menu-item index="/fillIn">填写采购计划单</el-menu-item>
-            <el-menu-item index="1-3">选项3</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">销售</template>
-            <el-menu-item index="/newsale">编辑销售订单</el-menu-item>
             <el-menu-item index="/saleList">销售单据一览</el-menu-item>
+            <el-menu-item index="/newsale">编辑销售计划单</el-menu-item>
           </el-submenu>
           <el-menu-item index="/caogao">草稿箱</el-menu-item>
            <el-submenu index="3">
@@ -29,6 +28,7 @@
             <el-menu-item index="/fapiao">发票任务一览</el-menu-item>
             <el-menu-item index="/newfapiao">新建发票任务</el-menu-item>
           </el-submenu>
+          <el-menu-item index="/stock">库存查询</el-menu-item>
           <el-menu-item index="6" style="float:right">
             <el-tooltip class="item" effect="dark" content="个人资料" placement="top-end">
               <a href="#" target="_blank">唐文件</a>
@@ -102,28 +102,6 @@ export default {
     return {
       activeIndex2: "1",
       levelList: [],
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ]
     };
   },
   watch: {
